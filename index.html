@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sumeru · Content Approval Portal</title>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+:root{--pd:#4B1E67;--pm:#6B2D90;--pa:#9039C6;--y:#FFBB00;--ow:#F7F4FA;--td:#1A0A26;--tm:#7A5E90;--r:16px 4px 16px 4px;--rs:10px 3px 10px 3px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--ow);color:var(--td);}
+
+/* ── LOGIN ── */
+#loginScreen{position:fixed;inset:0;z-index:1000;background:linear-gradient(135deg,#4B1E67 0%,#7B2FAA 100%);display:flex;align-items:center;justify-content:center;padding:20px;}
+#loginScreen.hidden{display:none;}
+.lcard{background:white;border-radius:20px 6px 20px 6px;padding:44px 40px 40px;width:100%;max-width:440px;box-shadow:0 32px 80px rgba(0,0,0,.25);}
+.llogo{display:flex;align-items:center;gap:10px;margin-bottom:32px;}
+.llogo img{height:36px;width:36px;object-fit:contain;border-radius:8px;background:var(--ow);padding:4px;}
+.llogo .brand{font-size:18px;font-weight:700;color:var(--td);display:block;letter-spacing:-.02em;}
+.llogo .sub{font-size:11px;color:var(--tm);font-weight:500;letter-spacing:.06em;text-transform:uppercase;}
+.ltitle{font-size:22px;font-weight:700;color:var(--td);margin-bottom:6px;letter-spacing:-.02em;}
+.lsub{font-size:13px;color:var(--tm);margin-bottom:28px;line-height:1.5;}
+.lerr{background:#FEF2F2;border:1px solid rgba(220,38,38,.2);color:#DC2626;font-size:12px;font-weight:600;padding:10px 12px;border-radius:8px;margin-bottom:16px;display:none;}
+.lerr.show{display:block;}
+.llbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tm);margin-bottom:6px;display:block;}
+.lsel,.linp{width:100%;padding:12px 14px;border:1.5px solid rgba(74,30,103,.15);border-radius:10px 3px 10px 3px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--td);background:white;outline:none;margin-bottom:16px;transition:border-color .15s;}
+.lsel:focus,.linp:focus{border-color:var(--pa);}
+.lbtn{width:100%;padding:13px;background:var(--pd);color:white;border:none;border-radius:10px 3px 10px 3px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;}
+.lbtn:hover{background:var(--pm);}
+
+/* ── APP ── */
+#app{display:none;}
+#app.visible{display:block;}
+
+/* ── STATUS BAR ── */
+.sbar{background:white;border-bottom:1px solid rgba(74,30,103,.08);padding:10px 52px;display:flex;align-items:center;position:sticky;top:0;z-index:150;box-shadow:0 2px 12px rgba(74,30,103,.08);}
+.sbar-inner{display:flex;align-items:center;gap:14px;flex:1;flex-wrap:wrap;}
+.sbar-title{font-size:11px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.08em;margin-right:4px;}
+.sbar-stat{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;}
+.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sd-p{background:#F59E0B;}.sd-a{background:#22C55E;}.sd-e{background:#EF4444;}.sd-d{background:#14B8A6;}
+.sbar-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.sbar-user{font-size:12px;color:var(--tm);}
+.sbar-user strong{color:var(--td);}
+.sbar-logout{font-size:11px;font-weight:600;color:var(--tm);background:none;border:1px solid rgba(74,30,103,.15);border-radius:20px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.sbar-logout:hover{border-color:var(--pa);color:var(--pa);}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#22C55E;display:inline-block;margin-right:4px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.prog-bar{height:3px;background:var(--ow);}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--pa),#C06EF0);transition:width .4s;}
+
+/* ── TAB NAV ── */
+.tab-nav{background:white;border-bottom:2px solid rgba(74,30,103,.1);padding:0 52px;display:flex;position:sticky;top:43px;z-index:140;box-shadow:0 2px 8px rgba(74,30,103,.04);}
+.tnav-tab{padding:13px 22px;font-size:13px;font-weight:600;color:var(--tm);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;display:flex;align-items:center;gap:7px;white-space:nowrap;}
+.tnav-tab:hover{color:var(--pa);}
+.tnav-tab.active{color:var(--pa);border-bottom-color:var(--pa);}
+.tnav-badge{background:var(--ow);color:var(--tm);font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.tnav-tab.active .tnav-badge{background:rgba(144,57,198,.12);color:var(--pa);}
+
+/* ── VIEW PANELS ── */
+.view-panel{display:none;}
+.view-panel.active{display:block;}
+
+/* ── CALENDAR HEADER ── */
+.hdr{background:linear-gradient(135deg,#4B1E67 0%,#7B2FAA 100%);padding:36px 52px 32px;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.04);}
+.hdr::after{content:'';position:absolute;bottom:-50px;right:140px;width:200px;height:200px;border-radius:50%;background:rgba(255,187,0,.07);}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;position:relative;z-index:1;}
+.hdr-brand{display:flex;align-items:center;gap:10px;}
+.hdr-badge{background:rgba(255,187,0,.15);border:1px solid rgba(255,187,0,.35);color:var(--y);font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;}
+.hdr-content{position:relative;z-index:1;}
+.hdr h1{font-size:38px;font-weight:700;color:white;letter-spacing:-.03em;line-height:1.1;margin-bottom:4px;}
+.hdr h1 em{color:var(--y);font-style:normal;}
+.hdr-sub{font-size:13px;color:rgba(255,255,255,.55);}
+
+/* ── STATS ROW ── */
+.stats-row{background:white;border-bottom:1px solid rgba(74,30,103,.08);padding:16px 52px;display:flex;gap:28px;flex-wrap:wrap;align-items:center;}
+.stat{display:flex;flex-direction:column;gap:2px;}
+.stat-n{font-size:22px;font-weight:700;color:var(--pa);letter-spacing:-.03em;}
+.stat-l{font-size:10px;font-weight:600;color:var(--tm);text-transform:uppercase;letter-spacing:.07em;}
+.sdiv{width:1px;height:32px;background:rgba(74,30,103,.1);}
+
+/* ── FILTER ROW ── */
+.filter-row{background:white;border-bottom:1px solid rgba(74,30,103,.08);padding:12px 52px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.fl{font-size:10px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.08em;margin-right:4px;}
+.fb{font-size:12px;font-weight:500;padding:5px 13px;border-radius:20px;border:1.5px solid rgba(74,30,103,.15);background:white;color:var(--td);cursor:pointer;transition:all .15s;font-family:inherit;}
+.fb:hover{border-color:var(--pa);color:var(--pa);}
+.fb.on{background:var(--pd);color:white;border-color:var(--pd);}
+
+/* ── LEGEND ── */
+.legend{background:var(--ow);border-bottom:1px solid rgba(74,30,103,.08);padding:12px 52px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.lg{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.ll{font-size:10px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.08em;}
+.chip{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.vc-bfsi{background:#EDE9FF;color:#4B1E67;}.vc-health{background:#E3F5EC;color:#1A6B44;}
+.vc-util{background:#FFF3DC;color:#8A5200;}.vc-culture{background:#FCE8F7;color:#831A69;}
+.vc-fun{background:#E3F0FC;color:#1A4F8A;}.vc-flex{background:#F0F0F0;color:#555;border:1px dashed #ccc;}
+.oc-ai{background:#F2EBFF;color:#6B1FAA;border:1px solid #D5BFFF;}
+.oc-dcx{background:#EBF1FF;color:#1F3FAA;border:1px solid #BFCFFF;}
+.oc-qs{background:#EBFFF5;color:#1A7A4A;border:1px solid #BFFFD9;}
+.fc-video{background:#4B1E67;color:white;}.fc-carousel{background:#9039C6;color:white;}
+.fc-image{background:#6B2D90;color:white;}.fc-blog{background:#FFBB00;color:#1A0A26;}
+.fc-case{background:#1A0A26;color:white;}.fc-thought{background:white;color:#4B1E67;border:1px solid #C8A8E8;}
+.fc-cta{background:linear-gradient(90deg,#9039C6,#C87820);color:white;}.fc-flex{background:#F0F0F0;color:#666;border:1px dashed #bbb;}
+
+/* ── CALENDAR GRID ── */
+.cal-wrap{padding:28px 52px 40px;}
+.week-block{margin-bottom:32px;}
+.week-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--tm);margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.week-label::after{content:'';flex:1;height:1px;background:rgba(74,30,103,.1);}
+.week-anchor{font-size:10px;font-weight:500;color:var(--y);background:rgba(255,187,0,.12);border:1px solid rgba(255,187,0,.25);padding:2px 10px;border-radius:20px;}
+.day-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.pc{background:white;border-radius:var(--r);padding:16px 14px 12px;cursor:pointer;box-shadow:0 2px 12px rgba(74,30,103,.06);border:1.5px solid transparent;transition:all .2s;position:relative;overflow:hidden;}
+.pc:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(74,30,103,.13);border-color:var(--pa);}
+.pc.active{border-color:var(--pa);}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.s-ai::before{background:linear-gradient(90deg,#9039C6,#C06EF0);}
+.s-dcx::before{background:linear-gradient(90deg,#1F3FAA,#5B82E8);}
+.s-qs::before{background:linear-gradient(90deg,#1A7A4A,#42C47A);}
+.s-culture::before{background:linear-gradient(90deg,#AA1F6B,#E84BA8);}
+.s-fun::before{background:linear-gradient(90deg,#1F6BAA,#42A8E8);}
+.sp-blog{border:1.5px dashed var(--pa)!important;background:#FDFAFF;}
+.sp-conf{border:1.5px solid var(--y)!important;background:#FFFCF0;}
+.sp-flex{background:#FAFAFA;}
+.card-date{font-size:10px;font-weight:600;color:var(--tm);margin-bottom:8px;letter-spacing:.04em;}
+.card-chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.card-title{font-size:12px;font-weight:600;color:var(--td);line-height:1.4;margin-bottom:5px;}
+.card-hook{font-size:11px;color:var(--tm);line-height:1.5;}
+.card-more{margin-top:8px;font-size:11px;font-weight:600;color:var(--pa);}
+.cbadge{position:absolute;top:8px;right:8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 7px;border-radius:20px;}
+.b-launch{background:rgba(144,57,198,.12);color:var(--pa);}
+.b-conf{background:rgba(255,187,0,.2);color:#92540A;}
+.b-flex{background:#F0F0F0;color:#666;}
+.card-status-dot{position:absolute;bottom:10px;right:10px;width:9px;height:9px;border-radius:50%;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+.csd-p{background:#F59E0B;}.csd-a{background:#22C55E;}.csd-e{background:#EF4444;}.csd-d{background:#14B8A6;}
+
+/* ── BOTTOM CARDS ── */
+.bottom-section{padding:0 52px 48px;}
+.bcard{background:white;border-radius:var(--r);padding:24px;margin-bottom:14px;box-shadow:0 2px 12px rgba(74,30,103,.06);}
+.bcard-title{font-size:15px;font-weight:700;color:var(--td);margin-bottom:3px;}
+.bcard-sub{font-size:12px;color:var(--tm);margin-bottom:16px;}
+.bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.bitem{background:var(--ow);border-radius:var(--rs);padding:12px;border-left:3px solid var(--pa);}
+.bi-s{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--pa);margin-bottom:2px;}
+.bi-d{font-size:17px;font-weight:700;color:var(--td);margin-bottom:2px;}
+.bi-t{font-size:11px;color:var(--tm);line-height:1.5;}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.ritem{background:var(--ow);border-radius:var(--rs);padding:12px;}
+.ri-t{font-size:12px;font-weight:700;color:var(--td);margin-bottom:7px;}
+.ri-l{font-size:11px;color:var(--tm);margin-bottom:4px;padding-left:12px;position:relative;}
+.ri-l::before{content:'—';position:absolute;left:0;}
+
+/* ── POSTS VIEW ── */
+.posts-header{background:white;border-bottom:1px solid rgba(74,30,103,.08);padding:20px 52px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.posts-header-left .ph-title{font-size:20px;font-weight:700;color:var(--td);letter-spacing:-.02em;}
+.posts-header-left .ph-sub{font-size:12px;color:var(--tm);margin-top:3px;}
+.posts-filter{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 52px;background:var(--ow);border-bottom:1px solid rgba(74,30,103,.08);}
+.posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:16px;padding:24px 52px 48px;}
+
+/* ── POST CARD ── */
+.pcard{background:white;border-radius:var(--r);border:1.5px solid rgba(74,30,103,.1);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s;}
+.pcard:hover{box-shadow:0 8px 28px rgba(74,30,103,.12);}
+.pcard.s-approved{border-color:rgba(34,197,94,.45);}
+.pcard.s-edits{border-color:rgba(239,68,68,.35);}
+.pcard.s-edited{border-color:rgba(20,184,166,.4);}
+.pcard-header{padding:11px 14px;border-bottom:1px solid rgba(74,30,103,.08);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.pcard-pills{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.ppill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;}
+.pp-ai{background:rgba(144,57,198,.1);color:#5B1E9E;}
+.pp-qs{background:rgba(0,94,162,.1);color:#00529E;}
+.pp-dcx{background:rgba(255,165,0,.15);color:#7A5500;}
+.pp-fun{background:rgba(34,197,94,.1);color:#166534;}
+.pp-culture{background:rgba(20,184,166,.1);color:#0F766E;}
+.pp-bfsi{background:#EEF2FF;color:#3730A3;}
+.pp-health{background:#FFF0F6;color:#9D174D;}
+.pp-util{background:#F0FDF4;color:#14532D;}
+.pp-cross{background:rgba(144,57,198,.06);color:#6B2D90;}
+.pp-seq-a{background:#EFF6FF;color:#1D4ED8;}
+.pp-seq-i{background:#FFF7ED;color:#C2410C;}
+.pp-seq-s{background:#F0FDF4;color:#15803D;}
+.pp-seq-x{background:#F9F0FF;color:#6B2D90;}
+.pp-fmt{background:var(--ow);color:var(--tm);}
+.pcard-date{font-size:11px;color:var(--tm);font-weight:600;white-space:nowrap;}
+
+.pcard-body{padding:14px;flex:1;display:flex;flex-direction:column;gap:10px;}
+
+/* hook line */
+.p-hook{font-size:13px;font-weight:600;color:var(--td);line-height:1.5;border-left:3px solid var(--pa);padding-left:10px;}
+
+/* copy block */
+.p-copy{font-size:12px;line-height:1.7;color:#3d3d3d;max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.p-copy.open{max-height:2000px;}
+
+/* carousel / video slides */
+.slides-block{display:none;}
+.slides-block.open{display:block;}
+.slide-item{border:1px solid rgba(74,30,103,.1);border-radius:8px;padding:10px 12px;margin-bottom:8px;background:var(--ow);}
+.slide-num{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--pa);margin-bottom:4px;}
+.slide-headline{font-size:12px;font-weight:700;color:var(--td);margin-bottom:3px;line-height:1.4;}
+.slide-body{font-size:11px;color:var(--tm);line-height:1.5;}
+.slide-scene{font-size:10px;color:#888;font-style:italic;margin-top:4px;}
+
+.toggle-btn{font-size:11px;font-weight:600;color:var(--pa);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;text-align:left;display:flex;align-items:center;gap:4px;}
+
+/* case study callout */
+.cs-callout{background:rgba(144,57,198,.05);border:1px solid rgba(144,57,198,.15);border-radius:8px;padding:9px 11px;}
+.cs-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--pa);margin-bottom:3px;}
+.cs-text{font-size:11px;color:var(--td);line-height:1.5;}
+
+/* format note */
+.fmt-note{font-size:11px;color:var(--tm);background:var(--ow);border-radius:6px;padding:7px 10px;line-height:1.45;}
+.fmt-note strong{color:var(--td);}
+
+.p-tags{font-size:11px;color:var(--pa);line-height:1.5;}
+.p-approver{font-size:11px;color:var(--tm);display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.you-badge{background:rgba(144,57,198,.1);color:var(--pa);font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;text-transform:uppercase;letter-spacing:.05em;}
+
+/* status result bar */
+.rbar{padding:9px 12px;border-radius:8px;font-size:12px;font-weight:600;display:flex;align-items:flex-start;gap:7px;line-height:1.4;}
+.rbar-approved{background:#F0FDF4;color:#166534;border:1px solid rgba(34,197,94,.3);}
+.rbar-edits{background:#FEF2F2;color:#DC2626;border:1px solid rgba(239,68,68,.25);}
+.rbar-edited{background:#F0FDFA;color:#134E4A;border:1px solid rgba(20,184,166,.3);}
+
+/* edit zone */
+.edit-zone{display:none;flex-direction:column;gap:7px;}
+.edit-zone.open{display:flex;}
+.edit-ta{width:100%;min-height:100px;border:1.5px solid rgba(144,57,198,.3);border-radius:8px;padding:9px 11px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--td);resize:vertical;outline:none;line-height:1.65;}
+.edit-ta:focus{border-color:var(--pa);}
+.edit-note-ta{width:100%;height:52px;border:1.5px solid rgba(74,30,103,.12);border-radius:8px;padding:7px 11px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--td);resize:none;outline:none;}
+.edit-save{background:var(--pa);color:white;border:none;border-radius:var(--rs);padding:9px 16px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;align-self:flex-end;}
+.edit-save:hover{background:var(--pm);}
+
+/* card actions */
+.pcard-actions{padding:11px 14px;border-top:1px solid rgba(74,30,103,.08);display:flex;gap:7px;}
+.abtn{flex:1;padding:8px 10px;border-radius:var(--rs);font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:4px;}
+.abtn-approve{background:#22C55E;color:white;}.abtn-approve:hover{background:#16A34A;}
+.abtn-edit{background:var(--ow);color:var(--td);border:1px solid rgba(74,30,103,.15);}.abtn-edit:hover{background:rgba(144,57,198,.06);}
+.abtn-reject{background:#FEF2F2;color:#DC2626;border:1px solid rgba(239,68,68,.2);}.abtn-reject:hover{background:#FEE2E2;}
+.abtn-undo{background:var(--ow);color:var(--tm);border:1px solid rgba(74,30,103,.12);font-weight:500;}
+
+/* ── CALENDAR DRAWER ── */
+.drawer{position:fixed;top:0;right:0;width:480px;height:100vh;background:white;z-index:200;overflow-y:auto;box-shadow:-8px 0 48px rgba(74,30,103,.16);display:none;}
+.drawer.open{display:block;}
+.dh{background:linear-gradient(135deg,#4B1E67,#7B2FAA);padding:28px 24px 22px;position:sticky;top:0;z-index:10;}
+.dclose{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.14);border:none;cursor:pointer;color:white;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.dclose:hover{background:rgba(255,255,255,.24);}
+.d-date{font-size:10px;font-weight:700;color:var(--y);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;}
+.d-title{font-size:17px;font-weight:700;color:white;line-height:1.3;letter-spacing:-.02em;}
+.dbody{padding:20px 24px 36px;}
+.dchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+.dsec{margin-bottom:16px;}
+.dsl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--tm);margin-bottom:5px;}
+.dsc{font-size:13px;color:var(--td);line-height:1.65;background:var(--ow);padding:12px 14px;border-radius:var(--rs);}
+.dcta-box{background:linear-gradient(135deg,#4B1E67,#7B2FAA);border-radius:var(--rs);padding:16px;margin-bottom:20px;}
+.dcta-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--y);margin-bottom:5px;}
+.dcta-t{font-size:12px;color:rgba(255,255,255,.85);line-height:1.6;}
+.apanel{border-top:1px solid rgba(74,30,103,.1);padding-top:18px;}
+.apanel-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tm);margin-bottom:12px;}
+.astatus{padding:10px 13px;border-radius:var(--rs);font-size:13px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.as-p{background:#FFF8E1;color:#92540A;border:1px solid rgba(245,158,11,.3);}
+.as-a{background:#F0FDF4;color:#166534;border:1px solid rgba(34,197,94,.3);}
+.as-e{background:#FEF2F2;color:#991B1B;border:1px solid rgba(239,68,68,.25);}
+.as-d{background:#F0FDFA;color:#134E4A;border:1px solid rgba(20,184,166,.3);}
+.as-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.ahist-item{font-size:12px;color:var(--tm);padding:7px 10px;background:var(--ow);border-radius:7px;margin-bottom:5px;line-height:1.4;}
+.ahist-item strong{color:var(--td);}
+.atime{font-size:10px;opacity:.65;margin-left:4px;}
+.abtns{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.adwbtn{flex:1;min-width:90px;padding:9px 12px;border-radius:var(--rs);font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:4px;}
+.adwbtn-approve{background:#22C55E;color:white;}.adwbtn-approve:hover{background:#16A34A;}
+.adwbtn-edits{background:#FEF2F2;color:#DC2626;border:1px solid rgba(220,38,38,.2);}.adwbtn-edits:hover{background:#FEE2E2;}
+.adwbtn-undo{background:var(--ow);color:var(--tm);border:1px solid rgba(74,30,103,.15);}
+.aedit-form{display:none;flex-direction:column;gap:6px;}
+.aedit-form.open{display:flex;}
+.aedit-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tm);display:block;margin-bottom:4px;}
+.aedit-ta{width:100%;min-height:76px;border:1.5px solid rgba(144,57,198,.25);border-radius:var(--rs);padding:9px 11px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--td);resize:vertical;outline:none;}
+.aedit-ta:focus{border-color:var(--pa);}
+.aedit-submit{width:100%;padding:10px;background:var(--pd);color:white;border:none;border-radius:var(--rs);font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;}
+.aedit-submit:hover{background:var(--pm);}
+
+/* ── OVERLAY ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,10,38,.35);z-index:199;backdrop-filter:blur(2px);}
+.overlay.open{display:block;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--td);color:white;padding:11px 18px;border-radius:var(--rs);font-size:13px;font-weight:600;z-index:9999;transform:translateY(80px);opacity:0;transition:all .25s;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:320px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:#166534;}
+.toast.error{background:#991B1B;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){.day-row{grid-template-columns:repeat(3,1fr);}.drawer{width:100%;}.bgrid{grid-template-columns:1fr 1fr;}}
+@media(max-width:700px){.day-row{grid-template-columns:1fr 1fr;}.cal-wrap,.bottom-section,.posts-grid,.posts-header,.posts-filter{padding-left:16px;padding-right:16px;}.hdr,.stats-row,.legend,.filter-row,.sbar,.tab-nav{padding-left:16px;padding-right:16px;}.hdr h1{font-size:28px;}.bgrid,.rgrid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="loginScreen">
+  <div class="lcard">
+    <div class="llogo">
+      <img src="https://firebasestorage.googleapis.com/v0/b/standards-site-beta.appspot.com/o/documents%2F68zyxhjz9b4%2Fbk9ysbuk8zu%2FSumeru-Logo-Original_1708640999592_2500x2500.png?alt=media&token=qp47v6hl2x1" alt="Sumeru">
+      <div><span class="brand">Sumeru</span><span class="sub">Content Approval Portal</span></div>
+    </div>
+    <div class="ltitle">Welcome back</div>
+    <div class="lsub">Select your name and enter the shared password to access the content approval portal.</div>
+    <div class="lerr" id="loginErr">Incorrect password. Please try again.</div>
+    <label class="llbl">Your name</label>
+    <select class="lsel" id="loginName">
+      <option value="">— Select your name —</option>
+      <option value="Nisant">Nisant</option>
+      <option value="Aman Goyal">Aman Goyal</option>
+      <option value="Anna Chigo">Anna Chigo</option>
+      <option value="Sharad Nishith">Sharad Nishith</option>
+      <option value="Madhukar Sistla">Madhukar Sistla</option>
+      <option value="Andjela">Andjela</option>
+      <option value="Darsh">Darsh</option>
+    </select>
+    <label class="llbl">Password</label>
+    <input class="linp" type="password" id="loginPass" placeholder="Shared team password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="lbtn" onclick="doLogin()">Enter portal →</button>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app">
+
+  <!-- STATUS BAR -->
+  <div class="sbar">
+    <div class="sbar-inner">
+      <span class="sbar-title">Approvals</span>
+      <span class="sbar-stat"><span class="sdot sd-p"></span><span id="sb-p">— pending</span></span>
+      <span class="sbar-stat"><span class="sdot sd-a"></span><span id="sb-a">— approved</span></span>
+      <span class="sbar-stat"><span class="sdot sd-e"></span><span id="sb-e">— needs edits</span></span>
+      <span class="sbar-stat"><span class="sdot sd-d"></span><span id="sb-d">— edited</span></span>
+      <span style="font-size:11px;color:var(--tm);margin-left:4px;"><span class="live-dot"></span>Live</span>
+    </div>
+    <div class="sbar-right">
+      <span class="sbar-user">Viewing as <strong id="sbUser">—</strong></span>
+      <button class="sbar-logout" onclick="doLogout()">Log out</button>
+    </div>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <div class="tnav-tab active" id="tab-cal" onclick="switchTab('cal')">📅 Calendar <span class="tnav-badge" id="badge-cal">—</span></div>
+    <div class="tnav-tab" id="tab-posts" onclick="switchTab('posts')">✍️ Post Content <span class="tnav-badge" id="badge-posts">—</span></div>
+  </div>
+
+  <!-- ══ CALENDAR VIEW ══ -->
+  <div class="view-panel active" id="view-cal">
+    <div class="hdr">
+      <div class="hdr-top">
+        <div class="hdr-brand">
+          <img src="https://firebasestorage.googleapis.com/v0/b/standards-site-beta.appspot.com/o/documents%2F68zyxhjz9b4%2Fbk9ysbuk8zu%2FSumeru-Logo-Original_1708640999592_2500x2500.png?alt=media&token=qp47v6hl2x1" alt="Sumeru" style="height:30px;width:auto;">
+        </div>
+        <span class="hdr-badge">LinkedIn · May 2026</span>
+      </div>
+      <div class="hdr-content">
+        <h1>Content <em>Calendar</em></h1>
+        <p class="hdr-sub" id="hdrSub">Showing next 2 weeks · Daily Mon–Fri · All verticals &amp; offerings rotate</p>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><span class="stat-n" id="statCount">—</span><span class="stat-l">Posts this window</span></div>
+      <div class="sdiv"></div>
+      <div class="stat"><span class="stat-n">3</span><span class="stat-l">Verticals</span></div>
+      <div class="sdiv"></div>
+      <div class="stat"><span class="stat-n">3</span><span class="stat-l">Offerings</span></div>
+      <div class="sdiv"></div>
+      <div class="stat"><span class="stat-n">May 4</span><span class="stat-l">Blog launch</span></div>
+      <div class="sdiv"></div>
+      <div class="stat"><span class="stat-n">Jun 3–4</span><span class="stat-l">SF Connections</span></div>
+    </div>
+    <div class="filter-row">
+      <span class="fl">Filter:</span>
+      <button class="fb on" onclick="setCalFilter('all',this)">All</button>
+      <button class="fb" onclick="setCalFilter('ai',this)">AI Governance</button>
+      <button class="fb" onclick="setCalFilter('dcx',this)">DCX</button>
+      <button class="fb" onclick="setCalFilter('qs',this)">Quantum Security</button>
+      <button class="fb" onclick="setCalFilter('culture',this)">Culture</button>
+      <button class="fb" onclick="setCalFilter('fun',this)">Fun</button>
+      <button class="fb" onclick="setCalFilter('bfsi',this)">BFSI</button>
+      <button class="fb" onclick="setCalFilter('health',this)">Healthcare</button>
+      <button class="fb" onclick="setCalFilter('util',this)">Utilities</button>
+    </div>
+    <div class="legend">
+      <div class="lg"><span class="ll">Vertical:</span><span class="chip vc-bfsi">BFSI</span><span class="chip vc-health">Healthcare</span><span class="chip vc-util">Utilities</span><span class="chip vc-culture">Culture</span><span class="chip vc-fun">Fun</span></div>
+      <div class="lg"><span class="ll">Offering:</span><span class="chip oc-ai">AI Gov</span><span class="chip oc-dcx">DCX</span><span class="chip oc-qs">Quantum Sec</span></div>
+      <div class="lg"><span class="ll">Status:</span><span class="chip" style="background:#FFF8E1;color:#92540A;">⏳ Pending</span><span class="chip" style="background:#F0FDF4;color:#166534;">✅ Approved</span><span class="chip" style="background:#FEF2F2;color:#991B1B;">✗ Needs edits</span><span class="chip" style="background:#F0FDFA;color:#134E4A;">✏️ Edited</span></div>
+    </div>
+    <div class="cal-wrap" id="calWrap"></div>
+    <div class="bottom-section">
+      <div class="bcard">
+        <div class="bcard-title">Batching plan</div>
+        <div class="bcard-sub">Write all 5 posts for the week in one session. Suggested Monday cadence.</div>
+        <div class="bgrid">
+          <div class="bitem"><div class="bi-s">Monday AM</div><div class="bi-d">30 min</div><div class="bi-t">Review week's calendar. Check for breaking regulatory news worth reacting to.</div></div>
+          <div class="bitem"><div class="bi-s">LinkedIn Batch</div><div class="bi-d">90 min</div><div class="bi-t">Draft all 5 posts using /post-writer-sms and /carousel-writer-sms. Hand off design briefs same day.</div></div>
+          <div class="bitem"><div class="bi-s">Design Review</div><div class="bi-d">30 min</div><div class="bi-t">Review designed assets against briefs. Approve or request revisions. Keep Flex slot open.</div></div>
+          <div class="bitem"><div class="bi-s">Friday Queue</div><div class="bi-d">20 min</div><div class="bi-t">Schedule approved posts via Buffer or LinkedIn native. Best times: Tue–Thu 8–10 AM PT.</div></div>
+        </div>
+      </div>
+      <div class="bcard">
+        <div class="bcard-title">Review cadence</div>
+        <div class="bcard-sub">Total time: 35 min/week.</div>
+        <div class="rgrid">
+          <div class="ritem"><div class="ri-t">Weekly (15 min, every Monday)</div><div class="ri-l">Which posts outperformed? Note pillar + format combination</div><div class="ri-l">Any Flex slot needed for timely content this week?</div><div class="ri-l">Confirm week still reflects current priorities</div></div>
+          <div class="ritem"><div class="ri-t">Monthly (30 min, first Monday)</div><div class="ri-l">Review pillar balance — is one offering dominating?</div><div class="ri-l">Adjust format mix if types consistently underperform</div><div class="ri-l">Flag June: NERC CIP-012-2 effective July 2026</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ POSTS VIEW ══ -->
+  <div class="view-panel" id="view-posts">
+    <div class="posts-header">
+      <div class="posts-header-left">
+        <div class="ph-title">Post Content Approvals</div>
+        <div class="ph-sub" id="postsSubline">Showing posts for the next 2 weeks · Select your name above to highlight your lane</div>
+      </div>
+      <span id="postsProgress" style="font-size:12px;color:var(--tm);font-weight:600;white-space:nowrap;"></span>
+    </div>
+    <div class="posts-filter">
+      <span class="fl">Status:</span>
+      <button class="fb on" onclick="filterPostsStatus('all',this)">All</button>
+      <button class="fb" onclick="filterPostsStatus('pending',this)">Pending</button>
+      <button class="fb" onclick="filterPostsStatus('approved',this)">Approved</button>
+      <button class="fb" onclick="filterPostsStatus('edits',this)">Needs edits</button>
+      <button class="fb" onclick="filterPostsStatus('edited',this)">Edited</button>
+      <span style="width:1px;height:16px;background:rgba(74,30,103,.12);display:inline-block;margin:0 4px;"></span>
+      <span class="fl">Offering:</span>
+      <button class="fb" onclick="filterPostsOffering('AI Governance',this)">AI Gov</button>
+      <button class="fb" onclick="filterPostsOffering('Quantum Security',this)">Quantum Sec</button>
+      <button class="fb" onclick="filterPostsOffering('DCX',this)">DCX</button>
+      <button class="fb" onclick="filterPostsOffering('Culture',this)">Culture / Fun</button>
+    </div>
+    <div class="posts-grid" id="postsGrid"></div>
+  </div>
+
+</div><!-- end app -->
+
+<!-- CALENDAR DRAWER -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="dh">
+    <button class="dclose" onclick="closeDrawer()">✕</button>
+    <div class="d-date" id="dDate"></div>
+    <div class="d-title" id="dTitle"></div>
+  </div>
+  <div class="dbody">
+    <div class="dchips" id="dChips"></div>
+    <div class="dsec"><div class="dsl">Opening Hook</div><div class="dsc" id="dHook"></div></div>
+    <div class="dsec"><div class="dsl">Post Brief</div><div class="dsc" id="dBrief"></div></div>
+    <div class="dsec"><div class="dsl">Regulatory / Market Anchor</div><div class="dsc" id="dStat"></div></div>
+    <div class="dsec"><div class="dsl">Buyer Persona</div><div class="dsc" id="dBuyer"></div></div>
+    <div class="dcta-box"><div class="dcta-l">Closing Question + First Comment</div><div class="dcta-t" id="dCta"></div></div>
+    <div class="apanel">
+      <div class="apanel-title">Calendar approval</div>
+      <div class="astatus as-p" id="aStatusDisplay"><span class="as-dot" id="aStatusDot"></span><span id="aStatusText">Pending</span></div>
+      <div id="aHist"></div>
+      <div class="abtns" id="aCalBtns"></div>
+      <div class="aedit-form" id="aEditForm">
+        <label class="aedit-lbl">Describe the edits needed</label>
+        <textarea class="aedit-ta" id="aEditNote" placeholder="e.g. Swap Thursday for a DCX post, adjust the sequencing…"></textarea>
+        <button class="aedit-submit" onclick="submitCalEdits()">Submit edit request</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════
+// FIREBASE
+// ══════════════════════════════════════
+const FIREBASE_CONFIG = {
+  apiKey:"AIzaSyAwe6lsOA0NOiVeOLVrP4162Qrt-wVzTUQ",
+  authDomain:"sumeru-linkedin-content-gen.firebaseapp.com",
+  databaseURL:"https://sumeru-linkedin-content-gen-default-rtdb.firebaseio.com",
+  projectId:"sumeru-linkedin-content-gen",
+  storageBucket:"sumeru-linkedin-content-gen.firebasestorage.app",
+  messagingSenderId:"354575233717",
+  appId:"1:354575233717:web:ee6b1f67fe1a33343244fc",
+  measurementId:"G-DT3QZNZW0P"
+};
+const PORTAL_PASSWORD = "sumeru2026";
+let db;
+try{firebase.initializeApp(FIREBASE_CONFIG);db=firebase.database();}
+catch(e){console.warn("Firebase offline:",e.message);db=null;}
+
+// ══════════════════════════════════════
+// APPROVER LANES
+// ══════════════════════════════════════
+const APPROVERS = {
+  "Nisant":         {full:true},
+  "Aman Goyal":     {offerings:["DCX","Fun","Culture","Blog"]},
+  "Anna Chigo":     {offerings:["DCX","Fun","Culture","Blog"]},
+  "Sharad Nishith": {offerings:["AI Governance"]},
+  "Madhukar Sistla":{offerings:["Quantum Security"]},
+  "Andjela":        {verticals:["Healthcare"]},
+  "Darsh":          {verticals:["Utilities"]},
+};
+
+function getApproverForPost(p){
+  if(["Fun","Culture"].includes(p.contentType)||["Fun","Culture"].includes(p.offering)) return "Aman Goyal";
+  if(p.offering==="AI Governance") return "Sharad Nishith";
+  if(p.offering==="Quantum Security") return "Madhukar Sistla";
+  if(p.offering==="DCX"){
+    if(p.vertical==="Healthcare") return "Andjela";
+    if(p.vertical==="Utilities") return "Darsh";
+    return "Aman Goyal";
+  }
+  if(p.vertical==="Healthcare") return "Andjela";
+  if(p.vertical==="Utilities") return "Darsh";
+  return "Sharad Nishith";
+}
+
+function isMyLane(post){
+  if(currentUser==="Nisant") return true;
+  return getApproverForPost(post)===currentUser;
+}
+
+// ══════════════════════════════════════
+// CALENDAR POSTS DATA
+// ══════════════════════════════════════
+const VM={bfsi:"vc-bfsi",health:"vc-health",util:"vc-util",culture:"vc-culture",fun:"vc-fun",flex:"vc-flex"};
+const VL={bfsi:"BFSI",health:"Healthcare",util:"Utilities",culture:"Culture",fun:"Fun / All",flex:"Flex"};
+const OM={ai:"oc-ai",dcx:"oc-dcx",qs:"oc-qs"};
+const OL={ai:"AI Governance",dcx:"DCX",qs:"Quantum Security"};
+const FM={video:"fc-video",carousel:"fc-carousel",image:"fc-image",blog:"fc-blog",case:"fc-case",thought:"fc-thought",cta:"fc-cta",flex:"fc-flex"};
+const FL={video:"Video",carousel:"Carousel",image:"Single Image",blog:"Blog Feature",case:"Case Study",thought:"Thought Leadership",cta:"Sales/CTA",flex:"Flex"};
+
+// ══════════════════════════════════════
+// DATA — loaded from posts.json
+// n8n replaces posts.json each bi-weekly run.
+// The HTML shell never changes.
+// ══════════════════════════════════════
+let calPosts = [];
+let POST_DATES = {};
+let POST_COPY = {};
+
+async function loadPostsData() {
+  try {
+    // Cache-busted fetch so GitHub Pages always serves fresh JSON
+    const res = await fetch('./posts.json?v=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    calPosts = data.calPosts || [];
+    POST_COPY = data.postCopy || {};
+
+    // Build POST_DATES from isoDate strings in the JSON
+    POST_DATES = {};
+    calPosts.forEach(p => {
+      if (p.isoDate) POST_DATES[p.id] = new Date(p.isoDate + 'T00:00:00');
+    });
+
+    // Update header meta if present
+    if (data._meta) {
+      const subEl = document.getElementById('hdrSub');
+      if (subEl && data._meta.window) {
+        subEl.textContent = 'Showing ' + data._meta.window + ' · Daily Mon–Fri';
+      }
+    }
+
+    return true;
+  } catch(e) {
+    console.error('Failed to load posts.json:', e);
+    // Show error banner
+    const wrap = document.getElementById('calWrap');
+    if (wrap) wrap.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#DC2626;font-size:14px;"><strong>Could not load posts.json</strong><br>Make sure posts.json is in the same folder as index.html.<br><small>' + e.message + '</small></div>';
+    return false;
+  }
+}
+
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+let currentUser = sessionStorage.getItem('sumeru_portal_user') || null;
+let calApprovals = {};   // { postId: {status, history[]} }
+let postApprovals = {};  // { postId: {status, history[], editedCopy, editNote} }
+let calFilter = "all";
+let postStatusFilter = "all";
+let postOfferingFilter = null;
+let activeCalPostId = null;
+
+// ══════════════════════════════════════
+// 2-WEEK WINDOW — always starts NEXT Monday
+// ══════════════════════════════════════
+function getNextMonday() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dow = today.getDay(); // 0=Sun,1=Mon...
+  // days until next Monday (if today is Mon, still go to next Mon)
+  const daysToMon = dow === 0 ? 1 : (8 - dow) % 7 || 7;
+  const nm = new Date(today); nm.setDate(today.getDate() + daysToMon);
+  return nm;
+}
+
+function getWindowedBlocks() {
+  const startMon = getNextMonday();
+  const fmt = d => d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const blocks = [];
+  for (let w = 0; w < 2; w++) {
+    const wMon = new Date(startMon); wMon.setDate(startMon.getDate() + w*7);
+    const wFri = new Date(wMon); wFri.setDate(wMon.getDate() + 4);
+    const wkPosts = calPosts.filter(p => {
+      const d = POST_DATES[p.id]; return d >= wMon && d <= wFri;
+    });
+    if (!wkPosts.length) continue;
+    let anchor = '';
+    if (wkPosts.some(p=>p.id===1)) anchor='📝 Blog Launch: May 4';
+    if (wkPosts.some(p=>p.special==='sp-conf')) anchor='✈️ Pre-Salesforce Connections (Jun 3–4)';
+    blocks.push({
+      label:`Week ${w+1} · ${fmt(wMon)}–${fmt(wFri)}`,
+      anchor, posts:wkPosts
+    });
+  }
+  // fallback if date window has no posts (programme ended / before May)
+  if (!blocks.length) {
+    [1,2].forEach(wn => {
+      const wkPosts = calPosts.filter(p=>p.week===wn);
+      const labels=["Week 1 · May 4–8","Week 2 · May 11–15"];
+      let anchor = wn===1?'📝 Blog Launch: May 4':'';
+      blocks.push({label:labels[wn-1],anchor,posts:wkPosts});
+    });
+  }
+  return blocks;
+}
+
+// ══════════════════════════════════════
+// LOGIN / LOGOUT
+// ══════════════════════════════════════
+function doLogin(){
+  const name=document.getElementById('loginName').value;
+  const pass=document.getElementById('loginPass').value;
+  const err=document.getElementById('loginErr');
+  if(!name){err.textContent='Please select your name.';err.classList.add('show');return;}
+  if(pass!==PORTAL_PASSWORD){err.classList.add('show');return;}
+  err.classList.remove('show');
+  currentUser=name;
+  sessionStorage.setItem('sumeru_portal_user',name);
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('app').classList.add('visible');
+  document.getElementById('sbUser').textContent=name;
+  initApp();
+}
+
+function doLogout(){
+  currentUser=null;
+  sessionStorage.removeItem('sumeru_portal_user');
+  location.reload();
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+async function initApp(){
+  // Load posts.json first — everything depends on it
+  const loaded = await loadPostsData();
+  if (!loaded) return;
+
+  // Set dynamic header from window
+  const blocks=getWindowedBlocks();
+  const cnt=blocks.reduce((s,b)=>s+b.posts.length,0);
+  document.getElementById('statCount').textContent=cnt;
+  if(blocks.length){
+    const sub=cnt+' posts for approval · '+blocks[0].label.split(' · ')[1]+(blocks[1]?' and '+blocks[1].label.split(' · ')[1]:'');
+    document.getElementById('hdrSub').textContent=sub;
+    document.getElementById('postsSubline').textContent='Showing '+cnt+' posts · '+blocks[0].label+(blocks[1]?' and '+blocks[1].label:'');
+  }
+
+  if(db){
+    db.ref('cal_approvals/may2026').on('value',snap=>{
+      calApprovals=snap.val()||{};
+      renderCal(); updateStatusBar(); updateTabBadges();
+      if(activeCalPostId) refreshCalApprovalPanel(activeCalPostId);
+    });
+    db.ref('post_approvals/may2026').on('value',snap=>{
+      postApprovals=snap.val()||{};
+      renderPosts(); updateStatusBar(); updateTabBadges();
+    });
+  } else {
+    try{calApprovals=JSON.parse(sessionStorage.getItem('cal_ap')||'{}');}catch(e){}
+    try{postApprovals=JSON.parse(sessionStorage.getItem('post_ap')||'{}');}catch(e){}
+    renderCal(); renderPosts(); updateStatusBar(); updateTabBadges();
+  }
+}
+
+// ══════════════════════════════════════
+// TABS
+// ══════════════════════════════════════
+function switchTab(t){
+  document.querySelectorAll('.view-panel').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tnav-tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('view-'+t).classList.add('active');
+  document.getElementById('tab-'+t).classList.add('active');
+}
+
+// ══════════════════════════════════════
+// STATUS BAR + BADGES
+// ══════════════════════════════════════
+function updateStatusBar(){
+  const all=[...calPosts];
+  const combined={};
+  all.forEach(p=>{
+    const cs=(calApprovals[p.id]?.status||'pending');
+    const ps=(postApprovals[p.id]?.status||'pending');
+    // overall status: both must be approved to count as approved
+    combined[p.id]={cal:cs,post:ps};
+  });
+  const tot=all.length;
+  const pend=all.filter(p=>(postApprovals[p.id]?.status||'pending')==='pending').length;
+  const appr=all.filter(p=>(postApprovals[p.id]?.status||'pending')==='approved').length;
+  const edit=all.filter(p=>(postApprovals[p.id]?.status||'pending')==='edits').length;
+  const done=all.filter(p=>(postApprovals[p.id]?.status||'pending')==='edited').length;
+  document.getElementById('sb-p').textContent=pend+' pending';
+  document.getElementById('sb-a').textContent=appr+' approved';
+  document.getElementById('sb-e').textContent=edit+' needs edits';
+  document.getElementById('sb-d').textContent=done+' edited';
+  document.getElementById('progFill').style.width=Math.round((appr+done)/tot*100)+'%';
+}
+
+function updateTabBadges(){
+  const blocks=getWindowedBlocks();
+  const windowIds=blocks.flatMap(b=>b.posts.map(p=>p.id));
+  const calPend=windowIds.filter(id=>(calApprovals[id]?.status||'pending')==='pending').length;
+  const postPend=windowIds.filter(id=>(postApprovals[id]?.status||'pending')==='pending').length;
+  document.getElementById('badge-cal').textContent=calPend||'✓';
+  document.getElementById('badge-posts').textContent=postPend||'✓';
+}
+
+// ══════════════════════════════════════
+// CALENDAR RENDER
+// ══════════════════════════════════════
+function chip(cls,txt){const c=document.createElement('span');c.className='chip '+cls;c.textContent=txt;return c;}
+
+function calStatusDot(status){const m={pending:'csd-p',approved:'csd-a',needs_edits:'csd-e',edited:'csd-d'};return m[status]||'csd-p';}
+function calBorder(status){const m={approved:'1.5px solid rgba(34,197,94,.45)',needs_edits:'1.5px solid rgba(239,68,68,.35)',edited:'1.5px solid rgba(20,184,166,.4)'};return m[status]||'';}
+
+function renderCal(){
+  const w=document.getElementById('calWrap'); w.innerHTML='';
+  const blocks=getWindowedBlocks();
+  if(!blocks.length){w.innerHTML='<div style="text-align:center;padding:60px;color:var(--tm);font-size:14px;">No posts in the next 2-week window.</div>';return;}
+  blocks.forEach(wk=>{
+    const block=document.createElement('div');block.className='week-block';
+    const lbl=document.createElement('div');lbl.className='week-label';lbl.textContent=wk.label;
+    if(wk.anchor){const a=document.createElement('span');a.className='week-anchor';a.textContent=wk.anchor;lbl.appendChild(a);}
+    block.appendChild(lbl);
+    const row=document.createElement('div');row.className='day-row';
+    wk.posts.forEach(p=>{
+      const vis=calFilter==='all'||p.offering===calFilter||p.vertical===calFilter;
+      const st=calApprovals[p.id]?.status||'pending';
+      const card=document.createElement('div');
+      card.className='pc '+p.stripe+(p.special?' '+p.special:'');
+      card.id='cc'+p.id;
+      card.style.opacity=vis?'1':'0.2';
+      card.style.pointerEvents=vis?'auto':'none';
+      if(st!=='pending'&&!p.special) card.style.border=calBorder(st);
+      card.onclick=()=>openCalDrawer(p);
+      if(p.badge){const b=document.createElement('div');b.className='cbadge '+p.badge;b.textContent=p.badgeText;card.appendChild(b);}
+      const dot=document.createElement('div');dot.className='card-status-dot '+calStatusDot(st);card.appendChild(dot);
+      const dt=document.createElement('div');dt.className='card-date';dt.textContent=p.date;card.appendChild(dt);
+      const chips=document.createElement('div');chips.className='card-chips';
+      chips.appendChild(chip(VM[p.vertical]||'vc-flex',VL[p.vertical]||p.vertical));
+      if(OM[p.offering])chips.appendChild(chip(OM[p.offering],OL[p.offering]));
+      chips.appendChild(chip(FM[p.format]||'fc-flex',FL[p.format]||p.format));
+      card.appendChild(chips);
+      const tt=document.createElement('div');tt.className='card-title';tt.textContent=p.title;card.appendChild(tt);
+      const hk=document.createElement('div');hk.className='card-hook';hk.textContent=p.hook.length>100?p.hook.slice(0,100)+'…':p.hook;card.appendChild(hk);
+      const mr=document.createElement('div');mr.className='card-more';mr.textContent='View brief + approve →';card.appendChild(mr);
+      row.appendChild(card);
+    });
+    block.appendChild(row);w.appendChild(block);
+  });
+}
+
+function setCalFilter(f,btn){
+  calFilter=f;
+  document.querySelectorAll('.filter-row .fb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');renderCal();
+}
+
+// ══════════════════════════════════════
+// CALENDAR DRAWER
+// ══════════════════════════════════════
+function openCalDrawer(p){
+  if(activeCalPostId) document.getElementById('cc'+activeCalPostId)?.classList.remove('active');
+  activeCalPostId=p.id;
+  document.getElementById('cc'+p.id)?.classList.add('active');
+  document.getElementById('dDate').textContent=p.date+' · LinkedIn';
+  document.getElementById('dTitle').textContent=p.title;
+  const dc=document.getElementById('dChips');dc.innerHTML='';
+  dc.appendChild(chip(VM[p.vertical]||'vc-flex',VL[p.vertical]||p.vertical));
+  if(OM[p.offering])dc.appendChild(chip(OM[p.offering],OL[p.offering]));
+  dc.appendChild(chip(FM[p.format]||'fc-flex',FL[p.format]||p.format));
+  document.getElementById('dHook').textContent=p.hook;
+  document.getElementById('dBrief').textContent=p.brief;
+  document.getElementById('dStat').textContent=p.stat;
+  document.getElementById('dBuyer').textContent=p.buyer;
+  document.getElementById('dCta').textContent=p.cta;
+  refreshCalApprovalPanel(p.id);
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  if(activeCalPostId){document.getElementById('cc'+activeCalPostId)?.classList.remove('active');activeCalPostId=null;}
+  document.getElementById('aEditForm').classList.remove('open');
+}
+
+function refreshCalApprovalPanel(pid){
+  const d=calApprovals[pid]||{status:'pending',history:[]};
+  const st=d.status||'pending';
+  const hist=d.history||[];
+  const sdEl=document.getElementById('aStatusDisplay');
+  const dotEl=document.getElementById('aStatusDot');
+  const txtEl=document.getElementById('aStatusText');
+  sdEl.className='astatus';
+  dotEl.className='as-dot';
+  const last=hist.length?hist[hist.length-1]:null;
+  const dotCls={pending:'asd-p',approved:'asd-a',needs_edits:'asd-e',edited:'asd-d'};
+  const sdCls={pending:'as-p',approved:'as-a',needs_edits:'as-e',edited:'as-d'};
+  sdEl.classList.add(sdCls[st]||'as-p');
+  dotEl.style.background={pending:'#F59E0B',approved:'#22C55E',needs_edits:'#EF4444',edited:'#14B8A6'}[st]||'#F59E0B';
+  const labels={pending:'⏳ Pending approval',approved:'✅ Approved'+(last?' by '+last.by+' · '+last.ts:''),needs_edits:'✗ Needs edits'+(last?' · '+last.by:''),edited:'✏️ Marked edited'+(last?' · '+last.by:'')};
+  txtEl.textContent=labels[st]||'⏳ Pending';
+  const histEl=document.getElementById('aHist');
+  histEl.innerHTML=hist.map(h=>`<div class="ahist-item"><strong>${{approved:'✅',needs_edits:'✗ Edits',edited:'✏️',pending:'↩'}[h.status]||h.status}</strong> by ${h.by} <span class="atime">${h.ts}</span>${h.note?`<br><span style="color:var(--td)">"${h.note}"</span>`:''}</div>`).join('');
+  const btnsEl=document.getElementById('aCalBtns');btnsEl.innerHTML='';
+  const isN=currentUser==='Nisant';
+  if(!isN){btnsEl.innerHTML='<span style="font-size:12px;color:var(--tm);">Calendar approval is Nisant\'s lane.</span>';return;}
+  if(st!=='approved'){const b=document.createElement('button');b.className='adwbtn adwbtn-approve';b.textContent='✓ Approve slot';b.onclick=()=>saveCalApproval(pid,'approved','');btnsEl.appendChild(b);}
+  if(st!=='needs_edits'){const b=document.createElement('button');b.className='adwbtn adwbtn-edits';b.textContent='✗ Request edits';b.onclick=()=>document.getElementById('aEditForm').classList.add('open');btnsEl.appendChild(b);}
+  if(st!=='pending'){const b=document.createElement('button');b.className='adwbtn adwbtn-undo';b.textContent='↩ Reset';b.onclick=()=>saveCalApproval(pid,'pending','Reset');btnsEl.appendChild(b);}
+}
+
+function submitCalEdits(){
+  const note=document.getElementById('aEditNote').value.trim();
+  if(!note){showToast('Describe the edits needed','error');return;}
+  document.getElementById('aEditForm').classList.remove('open');
+  saveCalApproval(activeCalPostId,'needs_edits',note);
+}
+
+function saveCalApproval(pid,status,note){
+  const now=new Date();
+  const ts=now.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  if(!calApprovals[pid]) calApprovals[pid]={status:'pending',history:[]};
+  calApprovals[pid].status=status;
+  if(!calApprovals[pid].history) calApprovals[pid].history=[];
+  calApprovals[pid].history.push({by:currentUser,status,note:note||'',ts});
+  if(db){
+    db.ref(`cal_approvals/may2026/${pid}`).set(calApprovals[pid]).then(()=>showToast(status==='approved'?'✅ Slot approved':'Saved','success')).catch(e=>showToast('Save failed','error'));
+  } else {
+    sessionStorage.setItem('cal_ap',JSON.stringify(calApprovals));
+    renderCal();updateStatusBar();updateTabBadges();refreshCalApprovalPanel(pid);
+    showToast(status==='approved'?'✅ Approved (offline)':'Saved','success');
+  }
+}
+
+// ══════════════════════════════════════
+// POSTS RENDER
+// ══════════════════════════════════════
+const OFF_PILL={
+  'AI Governance':'pp-ai','Quantum Security':'pp-qs','DCX':'pp-dcx',
+  'Fun':'pp-fun','Culture':'pp-culture'
+};
+const VRT_PILL={
+  'BFSI':'pp-bfsi','Healthcare':'pp-health','Utilities':'pp-util',
+  'Cross':'pp-cross','culture':'pp-cross','fun':'pp-cross'
+};
+const SEQ_PILL={'A':'pp-seq-a','I':'pp-seq-i','S':'pp-seq-s','✦':'pp-seq-x'};
+
+function renderPosts(){
+  const blocks=getWindowedBlocks();
+  let posts=blocks.flatMap(b=>b.posts);
+
+  // filters
+  if(postStatusFilter!=='all') posts=posts.filter(p=>(postApprovals[p.id]?.status||'pending')===postStatusFilter);
+  if(postOfferingFilter){
+    posts=posts.filter(p=>{
+      if(postOfferingFilter==='Culture') return ['Fun','Culture'].includes(p.offering)||['fun','culture'].includes(p.vertical);
+      return p.offering===postOfferingFilter||(p.offering===postOfferingFilter.toLowerCase());
+    });
+  }
+
+  const g=document.getElementById('postsGrid');
+  if(!posts.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--tm);">No posts match this filter.</div>';return;}
+  g.innerHTML=posts.map(p=>buildPostCard(p)).join('');
+
+  const tot=blocks.flatMap(b=>b.posts).length;
+  const appr=blocks.flatMap(b=>b.posts).filter(p=>['approved','edited'].includes(postApprovals[p.id]?.status||'pending')).length;
+  document.getElementById('postsProgress').textContent=`${appr}/${tot} approved`;
+}
+
+function buildPostCard(p){
+  const st=postApprovals[p.id]?.status||'pending';
+  const cd=POST_COPY[p.id];
+  const aprName=getApproverForPost(p);
+  const mine=isMyLane(p);
+  const canAct=mine&&['pending','edits'].includes(st);
+  const OL2={'ai':'AI Governance','dcx':'DCX','qs':'Quantum Security','culture':'Culture','fun':'Fun'};
+  const offeringLabel=OL2[p.offering]||p.offering;
+  const vertLabel=VL[p.vertical]||p.vertical;
+  const fmtLabel=FL[p.format]||p.format;
+  const ofpill=OFF_PILL[offeringLabel]||'pp-ai';
+  const vtpill=VRT_PILL[vertLabel]||'pp-cross';
+
+  // display copy
+  const displayCopy=(st==='edited'&&postApprovals[p.id]?.editedCopy)?postApprovals[p.id].editedCopy:(cd?.type==='single'?cd.copy:'');
+  const editedCopyForTA=postApprovals[p.id]?.editedCopy||displayCopy;
+
+  // status bar
+  let sbar='';
+  const la=postApprovals[p.id];
+  const lastH=la?.history?.length?la.history[la.history.length-1]:null;
+  if(st==='approved') sbar=`<div class="rbar rbar-approved">✅ Approved by ${la.approvedBy||aprName}${la.approvedAt?' · '+la.approvedAt:''}</div>`;
+  else if(st==='edits') sbar=`<div class="rbar rbar-edits">✗ Edits requested by ${lastH?.by||''} ${lastH?.note?'— "'+lastH.note+'"':''}</div>`;
+  else if(st==='edited') sbar=`<div class="rbar rbar-edited">✏️ Edited by ${la.editedBy||aprName}${la.editNote?' — "'+la.editNote+'"':''}</div>`;
+
+  // slides (carousel / video)
+  let slidesHtml='';
+  if(cd&&(cd.type==='carousel'||cd.type==='video')){
+    const isVideo=cd.type==='video';
+    slidesHtml=`
+      <button class="toggle-btn" onclick="toggleSlides(${p.id})" id="slidesbtn-${p.id}">
+        ${isVideo?'🎬':'📊'} ${isVideo?'View video script':'View carousel slides'} ↓
+      </button>
+      <div class="slides-block" id="slides-${p.id}">
+        ${cd.slides.map((s,i)=>`
+          <div class="slide-item">
+            <div class="slide-num">${s.label}</div>
+            ${s.headline?`<div class="slide-headline">${s.headline}</div>`:''}
+            ${s.subtitle?`<div class="slide-body" style="font-style:italic;color:var(--pa);">${s.subtitle}</div>`:''}
+            ${s.body?`<div class="slide-body">${s.body.replace(/\n/g,'<br>')}</div>`:''}
+            ${s.scene?`<div class="slide-scene">📹 ${s.scene}</div>`:''}
+          </div>
+        `).join('')}
+      </div>`;
+  }
+
+  // case study
+  let csHtml='';
+  if(cd?.caseStudy) csHtml=`<div class="cs-callout"><div class="cs-label">📊 ${cd.caseStudy.label}</div><div class="cs-text">${cd.caseStudy.text}</div></div>`;
+
+  // format note
+  const formatNote=(cd?.type==='video'?`<div class="fmt-note"><strong>Format:</strong> Video — scripted as carousel-in-motion. Each scene = one talking point. Keep under 90 seconds total. Film direct-to-camera, authentic tone. Fallback: carousel with same slides as static images.</div>`:
+    cd?.type==='carousel'?`<div class="fmt-note"><strong>Format:</strong> Carousel — ${cd.slides.length} slides. Cover slide must stop the scroll. No URLs on any slide. Closing question on last slide AND in caption.</div>`:'');
+
+  // actions
+  let actions='';
+  if(canAct){
+    actions=`<div class="pcard-actions">
+      <button class="abtn abtn-approve" onclick="approvePost(${p.id})">✓ Approve</button>
+      <button class="abtn abtn-edit" onclick="togglePostEdit(${p.id})">✏️ Edit copy</button>
+      <button class="abtn abtn-reject" onclick="rejectPost(${p.id})">✗ Needs edits</button>
+    </div>`;
+  } else if(['approved','edits','edited'].includes(st)){
+    actions=`<div class="pcard-actions"><button class="abtn abtn-undo" onclick="undoPost(${p.id})">↩ Reset</button></div>`;
+  }
+
+  return `<div class="pcard s-${st}" id="pc-${p.id}">
+    <div class="pcard-header">
+      <div class="pcard-pills">
+        <span class="ppill ${ofpill}">${offeringLabel==='AI Governance'?'AI Gov':offeringLabel==='Quantum Security'?'QS':offeringLabel}</span>
+        <span class="ppill ${vtpill}">${vertLabel}</span>
+        <span class="ppill pp-fmt">${fmtLabel}</span>
+        ${cd?.type==='video'?'<span class="ppill" style="background:#4B1E67;color:white;">▶ Video</span>':''}
+      </div>
+      <span class="pcard-date">${p.date}</span>
+    </div>
+    <div class="pcard-body">
+      <div class="p-hook">${p.hook}</div>
+      ${cd?.type==='single'&&displayCopy?`
+        <div class="p-copy" id="pcopy-${p.id}">${displayCopy.replace(/\n/g,'<br>')}</div>
+        <button class="toggle-btn" onclick="toggleCopy(${p.id})" id="copybtn-${p.id}">Show full post ↓</button>
+      `:''}
+      ${slidesHtml}
+      ${csHtml}
+      ${formatNote}
+      ${cd?.hashtags?`<div class="p-tags">${cd.hashtags}</div>`:''}
+      ${cd?.firstComment?`<div class="fmt-note" style="font-size:10px;"><strong>First comment:</strong> ${cd.firstComment}</div>`:''}
+      <div class="p-approver">Approver: ${aprName} ${mine?'<span class="you-badge">Your lane</span>':''}</div>
+      ${sbar}
+      <div class="edit-zone" id="ez-${p.id}">
+        <label style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tm);">Edit post copy</label>
+        <textarea class="edit-ta" id="eta-${p.id}" placeholder="Edit copy here…">${editedCopyForTA}</textarea>
+        <textarea class="edit-note-ta" id="enote-${p.id}" placeholder="Note for the team (optional)…">${postApprovals[p.id]?.editNote||''}</textarea>
+        <button class="edit-save" onclick="savePostEdit(${p.id})">Save edits</button>
+      </div>
+    </div>
+    ${actions}
+  </div>`;
+}
+
+function toggleCopy(id){
+  const el=document.getElementById('pcopy-'+id);
+  const btn=document.getElementById('copybtn-'+id);
+  const open=el.classList.contains('open');
+  el.classList.toggle('open',!open);
+  btn.textContent=open?'Show full post ↓':'Show less ↑';
+}
+
+function toggleSlides(id){
+  const el=document.getElementById('slides-'+id);
+  const btn=document.getElementById('slidesbtn-'+id);
+  const open=el.classList.contains('open');
+  el.classList.toggle('open',!open);
+  const p=calPosts.find(x=>x.id===id);
+  const isV=POST_COPY[id]?.type==='video';
+  btn.textContent=open?(isV?'🎬 View video script ↓':'📊 View carousel slides ↓'):(isV?'🎬 Hide video script ↑':'📊 Hide carousel slides ↑');
+}
+
+function togglePostEdit(id){
+  const z=document.getElementById('ez-'+id);
+  const open=z.classList.contains('open');
+  z.classList.toggle('open',!open);
+  if(!open){
+    const p=postApprovals[id];
+    const cd=POST_COPY[id];
+    const cur=p?.editedCopy||(cd?.type==='single'?cd.copy:'')||'';
+    document.getElementById('eta-'+id).value=cur;
+    document.getElementById('enote-'+id).value=p?.editNote||'';
+  }
+}
+
+// ══════════════════════════════════════
+// POST APPROVAL ACTIONS
+// ══════════════════════════════════════
+function savePostApproval(pid,data){
+  if(!postApprovals[pid]) postApprovals[pid]={status:'pending',history:[]};
+  Object.assign(postApprovals[pid],data);
+  if(db){
+    db.ref(`post_approvals/may2026/${pid}`).set(postApprovals[pid])
+      .then(()=>showToast(data.status==='approved'?'✅ Post approved':'Saved','success'))
+      .catch(()=>showToast('Save failed — check connection','error'));
+  } else {
+    sessionStorage.setItem('post_ap',JSON.stringify(postApprovals));
+    renderPosts();updateStatusBar();updateTabBadges();
+    showToast(data.status==='approved'?'✅ Approved (offline)':'Saved','success');
+  }
+}
+
+function ts(){
+  const n=new Date();
+  return n.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' · '+n.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+}
+
+function approvePost(pid){
+  document.getElementById('ez-'+pid)?.classList.remove('open');
+  savePostApproval(pid,{status:'approved',approvedBy:currentUser,approvedAt:ts(),history:[...(postApprovals[pid]?.history||[]),{by:currentUser,status:'approved',ts:ts()}]});
+}
+
+function rejectPost(pid){
+  savePostApproval(pid,{status:'edits',history:[...(postApprovals[pid]?.history||[]),{by:currentUser,status:'edits',note:'Flagged for rework',ts:ts()}]});
+}
+
+function undoPost(pid){
+  savePostApproval(pid,{status:'pending',history:[...(postApprovals[pid]?.history||[]),{by:currentUser,status:'pending',note:'Reset',ts:ts()}]});
+}
+
+function savePostEdit(pid){
+  const newCopy=document.getElementById('eta-'+pid).value.trim();
+  const note=document.getElementById('enote-'+pid).value.trim();
+  if(!newCopy){showToast('Copy cannot be empty','error');return;}
+  document.getElementById('ez-'+pid).classList.remove('open');
+  savePostApproval(pid,{status:'edited',editedCopy:newCopy,editNote:note,editedBy:currentUser,history:[...(postApprovals[pid]?.history||[]),{by:currentUser,status:'edited',note:note||'Copy edited',ts:ts()}]});
+}
+
+// ══════════════════════════════════════
+// POST FILTERS
+// ══════════════════════════════════════
+function filterPostsStatus(s,btn){
+  postStatusFilter=s;
+  document.querySelectorAll('.posts-filter .fb').forEach(b=>{if(['All','Pending','Approved','Needs edits','Edited'].includes(b.textContent.trim()))b.classList.remove('on');});
+  btn.classList.add('on');renderPosts();
+}
+function filterPostsOffering(o,btn){
+  if(postOfferingFilter===o){postOfferingFilter=null;btn.classList.remove('on');}
+  else{postOfferingFilter=o;document.querySelectorAll('.posts-filter .fb').forEach(b=>{if(['AI Gov','Quantum Sec','DCX','Culture / Fun'].includes(b.textContent.trim()))b.classList.remove('on');});btn.classList.add('on');}
+  renderPosts();
+}
+
+// ══════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════
+let toastT;
+function showToast(msg,type=''){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.className='toast show '+(type||'');
+  clearTimeout(toastT);toastT=setTimeout(()=>{el.className='toast';},2800);
+}
+
+// ══════════════════════════════════════
+// AUTO-LOGIN
+// ══════════════════════════════════════
+if(currentUser){
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('app').classList.add('visible');
+  document.getElementById('sbUser').textContent=currentUser;
+  initApp();
+}
+</script>
+
+</body>
+</html>
