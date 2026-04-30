@@ -21126,3 +21126,22 @@ _Automated with this < workflow>_
 - **Content type:** Awareness
 - **Extracted content:** Automated workflow for logging and queuing content ideas for bi-weekly LinkedIn programme runs.
 - **Run ID:** —
+---
+
+## IDEA-1777523300 · queued
+- **Submitted:** 04/29/2026, 09:28 PM PT
+- **By:** U06C7PWHLE5
+- **Raw idea:** :white_check_mark: Idea logged — IDEA-1777523292
+
+*DCX* · Cross · Awareness
+
+Queued for the next bi-weekly run.
+_Automated with this < workflow>_
+- **Attached URL:** https://settle-made-mounting-essays.trycloudflare.com/workflow/ngtgzAsf820bU7XB?utm_source=n8n-internal&amp;utm_medium=powered_by&amp;utm_campaign=n8n-nodes-base.slack_016f4209fd9e470130b43ebdb3cd4bb6afee5b3d5543e4197db1a25c4582581c|n8n
+- **Has image:** No
+- **Input type:** url
+- **Offering:** DCX
+- **Vertical:** Cross
+- **Content type:** Awareness
+- **Extracted content:** A workflow automation system for logging and queuing content ideas for bi-weekly LinkedIn programme runs.
+- **Run ID:** —
