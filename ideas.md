@@ -22380,3 +22380,17 @@ _Automated with this < workflow>_
 - **Content type:** Awareness
 - **Extracted content:** Workflow automation system for logging and queuing content ideas through bi-weekly scheduled runs.
 - **Run ID:** —
+---
+
+## IDEA-1777525306 · queued
+- **Submitted:** 04/29/2026, 10:01 PM PT
+- **By:** U06C7PWHLE5
+- **Raw idea:** Harvest Now, Decrypt Later philosophy
+- **Attached URL:** —
+- **Has image:** No
+- **Input type:** text
+- **Offering:** Quantum Security
+- **Vertical:** Cross
+- **Content type:** Awareness
+- **Extracted content:** Harvest Now, Decrypt Later represents a future quantum threat where adversaries collect encrypted data today to decrypt once quantum computers become available.
+- **Run ID:** —
