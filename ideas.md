@@ -31,3 +31,17 @@
 - **Content type:** Awareness
 - **Extracted content:** Create LinkedIn posts before and after Salesforce Connections conference in June to drive team engagement and visibility.
 - **Run ID:** —
+---
+
+## IDEA-1777590477 · queued
+- **Submitted:** 04/30/2026, 04:07 PM PT
+- **By:** U06C7PWHLE5
+- **Raw idea:** idea For AuraAI, we need to create content around effectiveness of chat bots and personalization. I've been looking at industry research and have looked at these links by Delloitte, McKinsey, Juniper search. Until we have our own prospective cost -effectiveness data with clients and pilots, we need to reference industry wide research as we create product playbooks and positioning (which will play into our lead-magnet creation). In our posts, we should aim to reference latest research for credibility: let's start to aggregate them somewhere. Here are the links I looked at: < < *<
+- **Attached URL:** https://www.etavrian.com/news/personalization-conversion-uplift-deloitte?utm_source=copilot.com>
+- **Has image:** No
+- **Input type:** url
+- **Offering:** DCX
+- **Vertical:** Cross
+- **Content type:** Insight
+- **Extracted content:** Aggregate industry research on chatbot effectiveness and personalization from Deloitte, McKinsey, and Juniper to build credibility for product playbooks and lead-magnet positioning.
+- **Run ID:** —
