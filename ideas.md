@@ -17,3 +17,17 @@
 - **Content type:** Awareness
 - **Extracted content:** Introduction to AI Governance fundamentals and best practices applicable across industries.
 - **Run ID:** —
+---
+
+## IDEA-1777589983 · queued
+- **Submitted:** 04/30/2026, 03:59 PM PT
+- **By:** U06C7PWHLE5
+- **Raw idea:** idea The team is going to Salesforce connections beginning of June, lets do some posts on linkedin pre and post conference to build some engagement
+- **Attached URL:** —
+- **Has image:** No
+- **Input type:** text
+- **Offering:** Cross
+- **Vertical:** Cross
+- **Content type:** Awareness
+- **Extracted content:** Create LinkedIn posts before and after Salesforce Connections conference in June to drive team engagement and visibility.
+- **Run ID:** —
