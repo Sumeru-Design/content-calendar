@@ -293,6 +293,105 @@ body{font-family:'DM Sans',sans-serif;background:var(--ow);color:var(--td);}
 /* ── RESPONSIVE ── */
 @media(max-width:1100px){.day-row{grid-template-columns:repeat(3,1fr);}.drawer{width:100%;}.bgrid{grid-template-columns:1fr 1fr;}}
 @media(max-width:700px){.day-row{grid-template-columns:1fr 1fr;}.cal-wrap,.bottom-section,.posts-grid,.posts-header,.posts-filter{padding-left:16px;padding-right:16px;}.hdr,.stats-row,.legend,.filter-row,.sbar,.tab-nav{padding-left:16px;padding-right:16px;}.hdr h1{font-size:28px;}.bgrid,.rgrid{grid-template-columns:1fr;}}
+
+/* ── CALENDAR APPROVAL BAR ── */
+.cal-approval-bar{
+  margin:0 52px 40px;
+  border-radius:var(--r);
+  overflow:hidden;
+  box-shadow:0 4px 24px rgba(74,30,103,.12);
+}
+.cab-status{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 28px;gap:20px;flex-wrap:wrap;
+}
+.cab-status.state-pending{background:white;border:2px solid rgba(245,158,11,.4);}
+.cab-status.state-approved{background:#F0FDF4;border:2px solid rgba(34,197,94,.4);}
+.cab-status.state-needs_edits{background:#FEF2F2;border:2px solid rgba(239,68,68,.3);}
+.cab-left{display:flex;align-items:center;gap:16px;}
+.cab-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 16px;border-radius:20px;
+  font-size:13px;font-weight:700;white-space:nowrap;
+}
+.cab-pill-pending{background:#FFF8E1;color:#92540A;border:1px solid rgba(245,158,11,.4);}
+.cab-pill-approved{background:#DCFCE7;color:#166534;border:1px solid rgba(34,197,94,.4);}
+.cab-pill-needs_edits{background:#FEF2F2;color:#991B1B;border:1px solid rgba(239,68,68,.3);}
+.cab-pill-dot{width:8px;height:8px;border-radius:50%;}
+.cpd-p{background:#F59E0B;}.cpd-a{background:#22C55E;}.cpd-e{background:#EF4444;}
+.cab-meta{display:flex;flex-direction:column;gap:3px;}
+.cab-meta-title{font-size:15px;font-weight:700;color:var(--td);}
+.cab-meta-sub{font-size:12px;color:var(--tm);}
+.cab-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.cab-approve-btn{
+  padding:14px 32px;background:var(--pd);color:white;
+  border:none;border-radius:var(--rs);font-size:15px;font-weight:700;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;gap:8px;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(74,30,103,.3);
+}
+.cab-approve-btn:hover{background:var(--pm);transform:translateY(-1px);box-shadow:0 6px 20px rgba(74,30,103,.4);}
+.cab-approve-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.cab-change-btn{
+  padding:14px 20px;background:white;color:var(--td);
+  border:1.5px solid rgba(74,30,103,.2);border-radius:var(--rs);
+  font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.cab-change-btn:hover{border-color:var(--pa);color:var(--pa);}
+.cab-undo-btn{
+  padding:10px 16px;background:var(--ow);color:var(--tm);
+  border:1px solid rgba(74,30,103,.15);border-radius:var(--rs);
+  font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;
+}
+/* change request form */
+.cab-change-form{
+  display:none;padding:20px 28px;background:var(--ow);
+  border-top:1px solid rgba(74,30,103,.1);
+}
+.cab-change-form.open{display:block;}
+.cab-change-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tm);margin-bottom:8px;display:block;}
+.cab-change-ta{
+  width:100%;min-height:80px;border:1.5px solid rgba(144,57,198,.25);
+  border-radius:var(--rs);padding:10px 14px;font-size:13px;
+  font-family:'DM Sans',sans-serif;color:var(--td);resize:vertical;outline:none;
+  line-height:1.6;margin-bottom:10px;background:white;
+}
+.cab-change-ta:focus{border-color:var(--pa);}
+.cab-change-submit{
+  padding:10px 20px;background:var(--pa);color:white;border:none;
+  border-radius:var(--rs);font-size:13px;font-weight:700;
+  font-family:'DM Sans',sans-serif;cursor:pointer;margin-right:8px;
+}
+.cab-change-submit:hover{background:var(--pm);}
+.cab-change-cancel{
+  padding:10px 16px;background:none;color:var(--tm);border:none;
+  font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;
+}
+.cab-hist{padding:16px 28px 20px;background:var(--ow);border-top:1px solid rgba(74,30,103,.08);}
+.cab-hist-item{font-size:12px;color:var(--tm);padding:7px 10px;background:white;border-radius:7px;margin-bottom:5px;border:1px solid rgba(74,30,103,.08);}
+.cab-hist-item strong{color:var(--td);}
+.cab-hist-time{font-size:10px;opacity:.6;margin-left:4px;}
+
+/* ── POSTS LOCK STATE ── */
+.posts-lock{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:80px 20px;text-align:center;
+}
+.posts-lock-icon{font-size:48px;margin-bottom:16px;opacity:.4;}
+.posts-lock-title{font-size:18px;font-weight:700;color:var(--td);margin-bottom:8px;}
+.posts-lock-sub{font-size:13px;color:var(--tm);max-width:400px;line-height:1.6;margin-bottom:24px;}
+.posts-lock-btn{
+  padding:12px 24px;background:var(--pa);color:white;border:none;
+  border-radius:var(--rs);font-size:14px;font-weight:600;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+}
+.posts-lock-btn:hover{background:var(--pm);}
+
+/* ── TAB LOCKED STATE ── */
+.tnav-tab.locked{opacity:.5;cursor:not-allowed;}
+.tnav-tab.locked:hover{color:var(--tm);}
+
 </style>
 </head>
 <body>
@@ -357,7 +456,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--ow);color:var(--td);}
     <div class="hdr">
       <div class="hdr-top">
         <div class="hdr-brand">
-          <img src="https://github.com/Sumeru-Design/brand-assets/blob/main/Images/Sumeru-Horizontal-White.png?raw=true" alt="Sumeru" style="height:30px;width:auto;">
+          <img src="https://firebasestorage.googleapis.com/v0/b/standards-site-beta.appspot.com/o/documents%2F68zyxhjz9b4%2Fbk9ysbuk8zu%2FSumeru-Logo-Original_1708640999592_2500x2500.png?alt=media&token=qp47v6hl2x1" alt="Sumeru" style="height:30px;width:auto;">
         </div>
         <span class="hdr-badge">LinkedIn · May 2026</span>
       </div>
@@ -395,6 +494,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--ow);color:var(--td);}
       <div class="lg"><span class="ll">Status:</span><span class="chip" style="background:#FFF8E1;color:#92540A;">⏳ Pending</span><span class="chip" style="background:#F0FDF4;color:#166534;">✅ Approved</span><span class="chip" style="background:#FEF2F2;color:#991B1B;">✗ Needs edits</span><span class="chip" style="background:#F0FDFA;color:#134E4A;">✏️ Edited</span></div>
     </div>
     <div class="cal-wrap" id="calWrap"></div>
+
+    <!-- ── CALENDAR APPROVAL BAR ── -->
+    <div class="cal-approval-bar" id="calApprovalBar">
+      <div class="cab-status state-pending" id="cabStatus">
+        <div class="cab-left">
+          <div class="cab-pill cab-pill-pending" id="cabPill">
+            <span class="cab-pill-dot cpd-p" id="cabPillDot"></span>
+            <span id="cabPillText">⏳ Pending approval</span>
+          </div>
+          <div class="cab-meta">
+            <div class="cab-meta-title" id="cabMetaTitle">Calendar ready for your review</div>
+            <div class="cab-meta-sub" id="cabMetaSub">Approve the 2-week slot plan to trigger post generation. Only Nisant can approve.</div>
+          </div>
+        </div>
+        <div class="cab-actions" id="cabActions"></div>
+      </div>
+      <div class="cab-change-form" id="cabChangeForm">
+        <label class="cab-change-label">Describe the change needed</label>
+        <textarea class="cab-change-ta" id="cabChangeTa" placeholder="e.g. Swap Thursday May 7 to a QS post, move the DCX carousel to week 2, add a culture post on Friday…"></textarea>
+        <button class="cab-change-submit" onclick="submitCalChange()">Submit change request</button>
+        <button class="cab-change-cancel" onclick="closeCabForm()">Cancel</button>
+      </div>
+      <div class="cab-hist" id="cabHist" style="display:none;"></div>
+    </div>
+
     <div class="bottom-section">
       <div class="bcard">
         <div class="bcard-title">Batching plan</div>
@@ -440,6 +564,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--ow);color:var(--td);}
       <button class="fb" onclick="filterPostsOffering('DCX',this)">DCX</button>
       <button class="fb" onclick="filterPostsOffering('Culture',this)">Culture / Fun</button>
     </div>
+    <!-- Lock overlay shown when calendar not yet approved -->
+    <div class="posts-lock" id="postsLock" style="display:none;">
+      <div class="posts-lock-icon">🔒</div>
+      <div class="posts-lock-title">Post content not yet generated</div>
+      <div class="posts-lock-sub">The calendar for this window needs to be approved before Claude generates post copy. Once Nisant approves the calendar, posts will appear here automatically.</div>
+      <button class="posts-lock-btn" onclick="switchTab('cal')">← Go approve the calendar</button>
+    </div>
     <div class="posts-grid" id="postsGrid"></div>
   </div>
 
@@ -460,16 +591,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--ow);color:var(--td);}
     <div class="dsec"><div class="dsl">Regulatory / Market Anchor</div><div class="dsc" id="dStat"></div></div>
     <div class="dsec"><div class="dsl">Buyer Persona</div><div class="dsc" id="dBuyer"></div></div>
     <div class="dcta-box"><div class="dcta-l">Closing Question + First Comment</div><div class="dcta-t" id="dCta"></div></div>
-    <div class="apanel">
-      <div class="apanel-title">Calendar approval</div>
-      <div class="astatus as-p" id="aStatusDisplay"><span class="as-dot" id="aStatusDot"></span><span id="aStatusText">Pending</span></div>
-      <div id="aHist"></div>
-      <div class="abtns" id="aCalBtns"></div>
-      <div class="aedit-form" id="aEditForm">
-        <label class="aedit-lbl">Describe the edits needed</label>
-        <textarea class="aedit-ta" id="aEditNote" placeholder="e.g. Swap Thursday for a DCX post, adjust the sequencing…"></textarea>
-        <button class="aedit-submit" onclick="submitCalEdits()">Submit edit request</button>
-      </div>
+    <div style="border-top:1px solid rgba(74,30,103,.1);padding-top:16px;margin-top:4px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tm);margin-bottom:8px;">Calendar approval</div>
+      <div style="font-size:12px;color:var(--tm);line-height:1.5;">Use the approval bar below the calendar grid to approve or request changes for the full 2-week plan.</div>
     </div>
   </div>
 </div>
@@ -679,7 +803,7 @@ async function initApp(){
   if(db){
     db.ref('cal_approvals/may2026').on('value',snap=>{
       calApprovals=snap.val()||{};
-      renderCal(); updateStatusBar(); updateTabBadges();
+      renderCal(); renderCalApprovalBar(); updateStatusBar(); updateTabBadges();
       if(activeCalPostId) refreshCalApprovalPanel(activeCalPostId);
     });
     db.ref('post_approvals/may2026').on('value',snap=>{
@@ -689,7 +813,7 @@ async function initApp(){
   } else {
     try{calApprovals=JSON.parse(sessionStorage.getItem('cal_ap')||'{}');}catch(e){}
     try{postApprovals=JSON.parse(sessionStorage.getItem('post_ap')||'{}');}catch(e){}
-    renderCal(); renderPosts(); updateStatusBar(); updateTabBadges();
+    renderCal(); renderCalApprovalBar(); renderPosts(); updateStatusBar(); updateTabBadges();
   }
 }
 
@@ -734,6 +858,125 @@ function updateTabBadges(){
   const postPend=windowIds.filter(id=>(postApprovals[id]?.status||'pending')==='pending').length;
   document.getElementById('badge-cal').textContent=calPend||'✓';
   document.getElementById('badge-posts').textContent=postPend||'✓';
+}
+
+// ══════════════════════════════════════
+// CALENDAR APPROVAL BAR
+// ══════════════════════════════════════
+function renderCalApprovalBar(){
+  const isN = currentUser === 'Nisant';
+  // Read whole-calendar approval from Firebase key '0' (special key for calendar-level)
+  const d = calApprovals['__calendar__'] || {status:'pending', history:[]};
+  const st = d.status || 'pending';
+  const hist = d.history || [];
+  const last = hist.length ? hist[hist.length-1] : null;
+
+  // Status section
+  const statusEl = document.getElementById('cabStatus');
+  const pillEl   = document.getElementById('cabPill');
+  const pillDot  = document.getElementById('cabPillDot');
+  const pillTxt  = document.getElementById('cabPillText');
+  const metaTitle= document.getElementById('cabMetaTitle');
+  const metaSub  = document.getElementById('cabMetaSub');
+
+  statusEl.className = 'cab-status state-' + st;
+  pillEl.className   = 'cab-pill cab-pill-' + st;
+
+  if(st === 'approved'){
+    pillDot.className  = 'cab-pill-dot cpd-a';
+    pillTxt.textContent= '✅ Calendar approved';
+    metaTitle.textContent = 'Calendar approved — post generation triggered';
+    metaSub.textContent   = last ? 'Approved by ' + last.by + ' · ' + last.ts + '. Claude will generate copy for all ' + (calPosts.length||10) + ' slots.' : '';
+  } else if(st === 'needs_edits'){
+    pillDot.className  = 'cab-pill-dot cpd-e';
+    pillTxt.textContent= '✗ Changes requested';
+    metaTitle.textContent = 'Change request submitted';
+    metaSub.textContent   = last && last.note ? '"' + last.note.substring(0,120) + (last.note.length>120?'…':'') + '" — ' + last.by : '';
+  } else {
+    pillDot.className  = 'cab-pill-dot cpd-p';
+    pillTxt.textContent= '⏳ Pending approval';
+    metaTitle.textContent = 'Calendar ready for your review';
+    metaSub.textContent   = isN ? 'Approve the 2-week slot plan to trigger post generation.' : 'Nisant needs to approve the calendar before posts can be generated.';
+  }
+
+  // Action buttons
+  const actionsEl = document.getElementById('cabActions');
+  actionsEl.innerHTML = '';
+
+  if(isN){
+    if(st !== 'approved'){
+      const btnApp = document.createElement('button');
+      btnApp.className = 'cab-approve-btn';
+      btnApp.innerHTML = '✓ &nbsp;Approve calendar';
+      btnApp.onclick   = () => approveCalendar();
+      actionsEl.appendChild(btnApp);
+    }
+    if(st !== 'needs_edits'){
+      const btnChg = document.createElement('button');
+      btnChg.className = 'cab-change-btn';
+      btnChg.textContent = '✏️ Request changes';
+      btnChg.onclick   = () => openCabForm();
+      actionsEl.appendChild(btnChg);
+    }
+    if(st !== 'pending'){
+      const btnUndo = document.createElement('button');
+      btnUndo.className = 'cab-undo-btn';
+      btnUndo.textContent = '↩ Reset';
+      btnUndo.onclick = () => saveCalApproval('__calendar__','pending','Reset');
+      actionsEl.appendChild(btnUndo);
+    }
+  }
+
+  // History
+  const histEl = document.getElementById('cabHist');
+  if(hist.length){
+    histEl.style.display = 'block';
+    histEl.innerHTML = hist.slice().reverse().map(h =>
+      `<div class="cab-hist-item"><strong>${{approved:'✅ Approved',needs_edits:'✏️ Changes requested',pending:'↩ Reset'}[h.status]||h.status}</strong> by ${h.by}<span class="cab-hist-time">${h.ts}</span>${h.note?' — "'+h.note+'"':''}</div>`
+    ).join('');
+  } else {
+    histEl.style.display = 'none';
+  }
+
+  // Lock/unlock the Posts tab based on calendar approval
+  updatePostsLock(st);
+}
+
+function updatePostsLock(calStatus){
+  const postsTab  = document.getElementById('tab-posts');
+  const postsLock = document.getElementById('postsLock');
+  const postsGrid = document.getElementById('postsGrid');
+
+  if(calStatus === 'approved'){
+    postsTab.classList.remove('locked');
+    postsLock.style.display  = 'none';
+    postsGrid.style.display  = 'grid';
+  } else {
+    postsTab.classList.remove('locked'); // tab still clickable — shows lock message
+    postsLock.style.display  = 'flex';
+    postsGrid.style.display  = 'none';
+  }
+}
+
+function approveCalendar(){
+  saveCalApproval('__calendar__', 'approved', '');
+}
+
+function openCabForm(){
+  document.getElementById('cabChangeForm').classList.add('open');
+  document.getElementById('cabChangeTa').focus();
+}
+
+function closeCabForm(){
+  document.getElementById('cabChangeForm').classList.remove('open');
+  document.getElementById('cabChangeTa').value = '';
+}
+
+function submitCalChange(){
+  const note = document.getElementById('cabChangeTa').value.trim();
+  if(!note){ showToast('Describe the change needed','error'); return; }
+  closeCabForm();
+  saveCalApproval('__calendar__', 'needs_edits', note);
 }
 
 // ══════════════════════════════════════
@@ -843,12 +1086,7 @@ function refreshCalApprovalPanel(pid){
   if(st!=='pending'){const b=document.createElement('button');b.className='adwbtn adwbtn-undo';b.textContent='↩ Reset';b.onclick=()=>saveCalApproval(pid,'pending','Reset');btnsEl.appendChild(b);}
 }
 
-function submitCalEdits(){
-  const note=document.getElementById('aEditNote').value.trim();
-  if(!note){showToast('Describe the edits needed','error');return;}
-  document.getElementById('aEditForm').classList.remove('open');
-  saveCalApproval(activeCalPostId,'needs_edits',note);
-}
+// submitCalEdits removed — calendar approval now uses the full-calendar bar
 
 function saveCalApproval(pid,status,note){
   const now=new Date();
@@ -861,8 +1099,8 @@ function saveCalApproval(pid,status,note){
     db.ref(`cal_approvals/may2026/${pid}`).set(calApprovals[pid]).then(()=>showToast(status==='approved'?'✅ Slot approved':'Saved','success')).catch(e=>showToast('Save failed','error'));
   } else {
     sessionStorage.setItem('cal_ap',JSON.stringify(calApprovals));
-    renderCal();updateStatusBar();updateTabBadges();refreshCalApprovalPanel(pid);
-    showToast(status==='approved'?'✅ Approved (offline)':'Saved','success');
+    renderCal();renderCalApprovalBar();updateStatusBar();updateTabBadges();
+    showToast(status==='approved'?'✅ Calendar approved':'Saved','success');
   }
 }
 
