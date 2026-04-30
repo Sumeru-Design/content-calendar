@@ -22394,3 +22394,17 @@ _Automated with this < workflow>_
 - **Content type:** Awareness
 - **Extracted content:** Harvest Now, Decrypt Later represents a future quantum threat where adversaries collect encrypted data today to decrypt once quantum computers become available.
 - **Run ID:** —
+---
+
+## IDEA-1777525593 · queued
+- **Submitted:** 04/29/2026, 10:06 PM PT
+- **By:** U06C7PWHLE5
+- **Raw idea:** Top 5 reasons to meditate in a consulting environment
+- **Attached URL:** —
+- **Has image:** No
+- **Input type:** text
+- **Offering:** Uncategorised
+- **Vertical:** Cross
+- **Content type:** Culture
+- **Extracted content:** Meditation practices benefit consultants by reducing stress and improving focus in high-pressure work environments.
+- **Run ID:** —
