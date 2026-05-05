@@ -45,3 +45,17 @@
 - **Content type:** Insight
 - **Extracted content:** Aggregate industry research on chatbot effectiveness and personalization from Deloitte, McKinsey, and Juniper to build credibility for product playbooks and lead-magnet positioning.
 - **Run ID:** —
+---
+
+## IDEA-1777953404 · queued
+- **Submitted:** 05/04/2026, 08:56 PM PT
+- **By:** U06C7PWHLE5
+- **Raw idea:** idea let's do a post on challenges faced by higher ed institutions in website management
+- **Attached URL:** —
+- **Has image:** No
+- **Input type:** text
+- **Offering:** DCX
+- **Vertical:** Education
+- **Content type:** Insight
+- **Extracted content:** Challenges faced by higher education institutions in managing their websites
+- **Run ID:** —
