@@ -59,3 +59,17 @@
 - **Content type:** Insight
 - **Extracted content:** Challenges faced by higher education institutions in managing their websites
 - **Run ID:** —
+---
+
+## IDEA-1777953233 · queued
+- **Submitted:** 05/04/2026, 08:59 PM PT
+- **By:** U06C7PWHLE5
+- **Raw idea:** idea: let's do a post on challenges faced by higher ed institutions in website management
+- **Attached URL:** —
+- **Has image:** No
+- **Input type:** text
+- **Offering:** Uncategorised
+- **Vertical:** Cross
+- **Content type:** Awareness
+- **Extracted content:** Challenges faced by higher education institutions in website management
+- **Run ID:** —
