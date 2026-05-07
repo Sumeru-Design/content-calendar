@@ -73,3 +73,17 @@
 - **Content type:** Awareness
 - **Extracted content:** Challenges faced by higher education institutions in website management
 - **Run ID:** —
+---
+
+## IDEA-1778192335 · queued
+- **Submitted:** 05/07/2026, 03:18 PM PT
+- **By:** U06C7PWHLE5
+- **Raw idea:** <@U0B09F1KLJD> test
+- **Attached URL:** —
+- **Has image:** No
+- **Input type:** text
+- **Offering:** AI Governance
+- **Vertical:** Cross
+- **Content type:** Awareness
+- **Extracted content:** Exploring the impact of AI governance on cross-industry applications
+- **Run ID:** —
