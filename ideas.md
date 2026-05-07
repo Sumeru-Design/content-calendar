@@ -1,25 +1,10 @@
 # Sumeru Content Ideas Ledger
 
-> Auto-updated by n8n on each Slack submission from #content-ideas.
+> Auto-updated by n8n on each Slack submission.
 > Status: `queued` | `in_progress` | `scheduled` | `done` | `skipped`
-> n8n reads all `queued` ideas before each bi-weekly calendar generation run.
----
+> Total ideas logged: 3
 
-## IDEA-1777526485 · queued
-- **Submitted:** 04/29/2026, 10:21 PM PT
-- **By:** U06C7PWHLE5
-- **Raw idea:** Test Idea
-- **Attached URL:** —
-- **Has image:** No
-- **Input type:** text
-- **Offering:** AI Governance
-- **Vertical:** Cross
-- **Content type:** Awareness
-- **Extracted content:** Introduction to AI Governance fundamentals and best practices applicable across industries.
-- **Run ID:** —
----
-
-## IDEA-1777589983 · queued
+## IDEA-003 · queued
 - **Submitted:** 04/30/2026, 03:59 PM PT
 - **By:** U06C7PWHLE5
 - **Raw idea:** idea The team is going to Salesforce connections beginning of June, lets do some posts on linkedin pre and post conference to build some engagement
@@ -33,7 +18,7 @@
 - **Run ID:** —
 ---
 
-## IDEA-1777590477 · queued
+## IDEA-002 · queued
 - **Submitted:** 04/30/2026, 04:07 PM PT
 - **By:** U06C7PWHLE5
 - **Raw idea:** idea For AuraAI, we need to create content around effectiveness of chat bots and personalization. I've been looking at industry research and have looked at these links by Delloitte, McKinsey, Juniper search. Until we have our own prospective cost -effectiveness data with clients and pilots, we need to reference industry wide research as we create product playbooks and positioning (which will play into our lead-magnet creation). In our posts, we should aim to reference latest research for credibility: let's start to aggregate them somewhere. Here are the links I looked at: < < *<
@@ -47,7 +32,7 @@
 - **Run ID:** —
 ---
 
-## IDEA-1777953404 · queued
+## IDEA-001 · queued
 - **Submitted:** 05/04/2026, 08:56 PM PT
 - **By:** U06C7PWHLE5
 - **Raw idea:** idea let's do a post on challenges faced by higher ed institutions in website management
@@ -60,30 +45,3 @@
 - **Extracted content:** Challenges faced by higher education institutions in managing their websites
 - **Run ID:** —
 ---
-
-## IDEA-1777953233 · queued
-- **Submitted:** 05/04/2026, 08:59 PM PT
-- **By:** U06C7PWHLE5
-- **Raw idea:** idea: let's do a post on challenges faced by higher ed institutions in website management
-- **Attached URL:** —
-- **Has image:** No
-- **Input type:** text
-- **Offering:** Uncategorised
-- **Vertical:** Cross
-- **Content type:** Awareness
-- **Extracted content:** Challenges faced by higher education institutions in website management
-- **Run ID:** —
----
-
-## IDEA-1778192335 · queued
-- **Submitted:** 05/07/2026, 03:18 PM PT
-- **By:** U06C7PWHLE5
-- **Raw idea:** <@U0B09F1KLJD> test
-- **Attached URL:** —
-- **Has image:** No
-- **Input type:** text
-- **Offering:** AI Governance
-- **Vertical:** Cross
-- **Content type:** Awareness
-- **Extracted content:** Exploring the impact of AI governance on cross-industry applications
-- **Run ID:** —
