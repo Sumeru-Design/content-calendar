@@ -2,9 +2,9 @@
 
 > Auto-updated by n8n on each Slack submission.
 > Status: `queued` | `in_progress` | `scheduled` | `done` | `skipped`
-> Total ideas logged: 6
+> Total ideas logged: 4
 
-## IDEA-003 ÃÂÃÂ· queued
+## IDEA-001 · queued
 - **Submitted:** 04/30/2026, 03:59 PM PT
 - **By:** U06C7PWHLE5
 - **Raw idea:** idea The team is going to Salesforce connections beginning of June, lets do some posts on linkedin pre and post conference to build some engagement
@@ -18,7 +18,7 @@
 - **Run ID:** ÃÂ¢ÃÂÃÂ
 ---
 
-## IDEA-002 ÃÂÃÂ· queued
+## IDEA-002 · queued
 - **Submitted:** 04/30/2026, 04:07 PM PT
 - **By:** U06C7PWHLE5
 - **Raw idea:** idea For AuraAI, we need to create content around effectiveness of chat bots and personalization. I've been looking at industry research and have looked at these links by Delloitte, McKinsey, Juniper search. Until we have our own prospective cost -effectiveness data with clients and pilots, we need to reference industry wide research as we create product playbooks and positioning (which will play into our lead-magnet creation). In our posts, we should aim to reference latest research for credibility: let's start to aggregate them somewhere. Here are the links I looked at: < < *<
@@ -32,43 +32,14 @@
 - **Run ID:** ÃÂ¢ÃÂÃÂ
 ---
 
-## IDEA-001 ÃÂÃÂ· queued
+## IDEA-003 · queued
 - **Submitted:** 05/04/2026, 08:56 PM PT
 - **By:** U06C7PWHLE5
 - **Raw idea:** idea let's do a post on challenges faced by higher ed institutions in website management
-- **Attached URL:** ÃÂ¢ÃÂÃÂ
-- **Has image:** No
-- **Input type:** text
-- **Offering:** DCX
-- **Vertical:** Education
-- **Content type:** Insight
-- **Extracted content:** Challenges faced by higher education institutions in managing their websites
-- **Run ID:** ÃÂ¢ÃÂÃÂ
 ---
 
----
 
 ## IDEA-004 · queued
-- **Submitted:** undefined
-- **By:** U06C7PWHLE5
-- **Idea:** undefined
-- **URL:** undefined
-- **Has image:** No
-- **Run ID:** —
-
----
-
-## IDEA-005 · queued
-- **Submitted:** 5/7/2026, 3:49:31 PM PT
-- **By:** U06C7PWHLE5
-- **Idea:** —
-- **URL:** —
-- **Has image:** No
-- **Run ID:** —
-
----
-
-## IDEA-006 · queued
 - **Submitted:** 05/07/2026, 03:54 PM PT
 - **By:** U06C7PWHLE5
 - **Idea:** Here is the cybersecurity gap most companies are not ready for: *69% of organizations recognize that quantum computing threatens today’s encryption, but only 5% have implemented quantum-safe encryption.* ISACA also found that *55% of enterprises have not taken steps to prepare for quantum computing.*
