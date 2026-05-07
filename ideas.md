@@ -2,7 +2,7 @@
 
 > Auto-updated by n8n on each Slack submission.
 > Status: `queued` | `in_progress` | `scheduled` | `done` | `skipped`
-> Total ideas logged: 4
+> Total ideas logged: 5
 
 ## IDEA-003 ÃÂÃÂ· queued
 - **Submitted:** 04/30/2026, 03:59 PM PT
@@ -53,5 +53,15 @@
 - **By:** U06C7PWHLE5
 - **Idea:** undefined
 - **URL:** undefined
+- **Has image:** No
+- **Run ID:** —
+
+---
+
+## IDEA-005 · queued
+- **Submitted:** 5/7/2026, 3:49:31 PM PT
+- **By:** U06C7PWHLE5
+- **Idea:** —
+- **URL:** —
 - **Has image:** No
 - **Run ID:** —
