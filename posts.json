@@ -3,7 +3,7 @@
     "sprint": "Sprint 1 — BFSI",
     "window": "2026-05-18 to 2026-05-29",
     "generated": "2026-05-11",
-    "run_id": "RUN-1778515610940",
+    "run_id": "RUN-1778515676325",
     "calendar_status": "pending_approval",
     "note": "Calendar generated. Awaiting Nisant approval before copy generation."
   },
@@ -20,12 +20,12 @@
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "Branch Transformation Timeline: PCI DSS 4.0 Deadline Drives Digital-First Banking",
-      "hook": "PCI DSS 4.0 takes effect January 2026 — and most banks are about to discover their branch transformation timeline just accelerated by 18 months.",
-      "brief": "Examine how PCI DSS 4.0's authentication requirements are forcing banks to reimagine branch experiences, moving from compliance-driven digital overlays to customer-centric omnichannel journeys. Focus on the gap between regulatory timeline and customer experience delivery.",
-      "stat": "73% of bank branches still rely on legacy point-of-sale systems that cannot meet PCI DSS 4.0 authentication requirements without complete infrastructure overhaul",
-      "buyer": "CMO / Head of Digital",
-      "cta": "How is your branch transformation roadmap accounting for January's PCI deadline?"
+      "title": "PSD3 compliance deadline creates digital transformation urgency for European banks",
+      "hook": "PSD3 takes effect January 2026, giving European banks just 8 months to overhaul their customer experience infrastructure.",
+      "brief": "Highlight how the upcoming PSD3 regulatory deadline is forcing BFSI organizations to accelerate their digital customer experience initiatives. Focus on the compliance-driven urgency and the opportunity to build competitive advantage through superior DCX.",
+      "stat": "PSD3 takes effect January 2026, requiring enhanced customer authentication and experience standards",
+      "buyer": "Chief Digital Officer / Head of Digital Transformation, BFSI",
+      "cta": "How is your organization preparing for PSD3's DCX requirements?"
     },
     {
       "id": 2,
@@ -39,12 +39,12 @@
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "Clinical AI Audit Trail: 5-Slide FDA TPLC Compliance Framework",
-      "hook": "FDA's Total Product Lifecycle approach requires continuous AI monitoring — but most health systems are still building governance around static model validation.",
-      "brief": "5-slide carousel breaking down FDA TPLC requirements for clinical AI systems. Each slide covers: risk categorization, pre-market validation, post-market surveillance, adverse event reporting, and continuous learning protocols. Frame through Orchestra AI's healthcare configuration.",
-      "stat": "FDA expects 40% of medical devices to incorporate AI by 2027, but only 12% of health systems have TPLC-compliant governance frameworks in place",
-      "buyer": "CMIO / CTO",
-      "cta": "Which slide represents your biggest TPLC gap right now?"
+      "title": "5 critical AI governance gaps that expose healthcare organizations to regulatory risk",
+      "hook": "The FDA issued 15 AI/ML medical device warnings in Q1 2026 alone — here are the governance gaps behind every recall.",
+      "brief": "Educational carousel breaking down the most common AI governance failures in healthcare that lead to FDA warnings and device recalls. Each slide covers a specific gap with actionable prevention steps.",
+      "stat": "FDA issued 15 AI/ML medical device warnings in Q1 2026",
+      "buyer": "Chief Medical Officer / VP of Quality Assurance, Healthcare",
+      "cta": "Which of these governance gaps poses the biggest risk to your organization?"
     },
     {
       "id": 3,
@@ -53,17 +53,17 @@
       "week": 1,
       "offering": "quantum",
       "vertical": "utilities",
-      "format": "single-image",
+      "format": "thought-leadership",
       "stripe": "s-qs",
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "NERC CIP-014: Physical Security Standards Meet Quantum Cryptographic Threats",
-      "hook": "NERC CIP-014 requires transmission facilities to assess physical security threats — but the standard was written before quantum computers could break the encryption protecting those assessments.",
-      "brief": "Explore the intersection of NERC CIP-014 physical security requirements and quantum cryptographic vulnerability. Focus on how utilities must now protect both the physical infrastructure AND the cryptographic systems that secure the threat assessments themselves.",
-      "stat": "NERC CIP-014 covers 5,000+ transmission facilities, but less than 8% have quantum-safe encryption protecting their mandatory vulnerability assessments",
-      "buyer": "VP of OT Security",
-      "cta": "When did your CIP-014 assessments last evaluate cryptographic resilience?"
+      "title": "Why quantum-safe cryptography is becoming critical infrastructure for power grids",
+      "hook": "NERC CIP-013 now explicitly requires utilities to assess quantum computing threats to their cybersecurity plans by 2027.",
+      "brief": "Thought leadership piece on how quantum computing threatens current cryptographic protections in critical infrastructure, specifically power grids. Discuss the regulatory push and the timeline utilities face for quantum-safe transitions.",
+      "stat": "NERC CIP-013 requires quantum threat assessment in utility cybersecurity plans by 2027",
+      "buyer": "CISO / Head of Cybersecurity, Utilities",
+      "cta": "What's your timeline for quantum-safe cryptography implementation?"
     },
     {
       "id": 4,
@@ -77,12 +77,12 @@
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "Consulting Reality Check: The 3 AM Regulatory Deadline Text",
-      "hook": "Every consultant has gotten *that* text at 3 AM — 'New regulatory deadline just dropped, client needs assessment by Friday.'",
-      "brief": "Lighthearted video about the consulting reality of regulatory urgency. Quick compilation of typical scenarios: EU AI Act extensions, PCI DSS clarifications, DORA technical standards updates. Show how Sumeru's team handles these moments with both expertise and humor.",
-      "stat": "Average consultant receives 47 'urgent regulatory update' notifications per quarter — 23% arrive outside business hours",
-      "buyer": "Cross-vertical",
-      "cta": "What's the most random regulatory update you've had to explain on short notice?"
+      "title": "Behind the scenes: How our quantum computing team stays curious and innovative",
+      "hook": "Our quantum security researchers just spent a week at CERN, and the breakthrough moments happened in the most unexpected places.",
+      "brief": "Video showcasing team culture around continuous learning and innovation, featuring quantum team members discussing how external experiences and curiosity drive their problem-solving approach. Humanize the technical expertise.",
+      "stat": "Team spent a week at CERN collaborating on quantum research applications",
+      "buyer": "Technical talent / Industry peers",
+      "cta": "What unexpected places have sparked your biggest professional insights?"
     },
     {
       "id": 5,
@@ -96,12 +96,12 @@
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "Digital Banking Maturity: 4 Stages from DORA Compliance to Customer Excellence",
-      "hook": "DORA's operational resilience testing requirements are forcing banks to map every customer touchpoint — creating an unexpected opportunity to redesign digital experiences from the ground up.",
-      "brief": "4-slide progression showing how banks can leverage DORA's incident management requirements to build superior digital experiences. Stage 1: Compliance mapping, Stage 2: Resilience testing, Stage 3: Performance optimization, Stage 4: Experience innovation.",
-      "stat": "Banks spending $2.3B on DORA compliance could capture additional $890M in customer experience value by extending resilience frameworks to experience optimization",
-      "buyer": "Head of Digital / CMO",
-      "cta": "Which stage best describes your bank's current DORA-DCX maturity?"
+      "title": "The hidden customer experience costs of legacy core banking systems",
+      "hook": "Banks using core systems over 15 years old see 23% higher customer complaint rates — here's why modernization pays for itself.",
+      "brief": "Data-driven carousel revealing how legacy banking infrastructure directly impacts customer satisfaction metrics, complaint rates, and competitive positioning. Include specific examples and modernization ROI calculations.",
+      "stat": "Banks with 15+ year old core systems see 23% higher customer complaint rates",
+      "buyer": "CTO / Head of Core Banking Transformation, BFSI",
+      "cta": "What's the biggest customer experience pain point your core system creates?"
     },
     {
       "id": 6,
@@ -115,12 +115,12 @@
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "Clinical Decision Support vs. Medical Device: FDA's AI Classification Determines Your Governance Path",
-      "hook": "Same AI algorithm, different regulatory path — FDA's distinction between Clinical Decision Support and Medical Device AI determines whether you need 510(k) clearance or can proceed under CDS guidelines.",
-      "brief": "Examine FDA's nuanced classification system for healthcare AI, focusing on the decision tree that determines regulatory pathway. Highlight how small changes in AI implementation can shift classification and governance requirements dramatically.",
-      "stat": "68% of hospital AI implementations sit in the gray zone between CDS and Medical Device classification, creating governance uncertainty for IT leaders",
-      "buyer": "CTO / CMIO",
-      "cta": "How confident are you in your AI classification decisions under current FDA guidance?"
+      "title": "How Mayo Clinic's AI governance model became the healthcare industry standard",
+      "hook": "Mayo Clinic's AI review board has evaluated over 200 clinical AI applications with a 97% approval rate — here's their methodology.",
+      "brief": "Deep dive into a successful AI governance implementation, breaking down the specific processes, criteria, and organizational structure that makes Mayo Clinic's approach so effective and replicable.",
+      "stat": "Mayo Clinic AI review board: 200+ applications evaluated with 97% approval rate",
+      "buyer": "Chief Medical Officer / AI Ethics Committee Chair, Healthcare",
+      "cta": "What governance model would work best for your organization's AI initiatives?"
     },
     {
       "id": 7,
@@ -134,12 +134,12 @@
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "Case Study: Regional Utility's PQC Migration Strategy Under NERC CIP Constraints",
-      "hook": "When a 500MW regional utility needed quantum-safe cryptography across 200+ substations, NERC CIP compliance requirements turned a straightforward technology refresh into a 18-month orchestrated migration.",
-      "brief": "Detailed case study of post-quantum cryptography implementation at a regional utility. Cover NERC CIP-007 configuration management challenges, vendor coordination across OT systems, testing protocols that maintain grid reliability, and phased rollout strategy.",
-      "stat": "Utility industry faces 2030 quantum threat deadline but averages 36-month technology refresh cycles for OT infrastructure — creating 6-year exposure window",
-      "buyer": "Head of IT-OT Convergence",
-      "cta": "Download the full PQC migration playbook and vendor assessment framework."
+      "title": "Case study: How a major utility prepared for post-quantum cryptography migration",
+      "hook": "A Fortune 500 utility just completed the industry's first full post-quantum cryptography pilot — the results will change how you think about timeline and budget.",
+      "brief": "Feature a detailed case study blog post about a real utility's quantum-safe migration project, including timeline, budget, lessons learned, and measurable security improvements achieved.",
+      "stat": "First Fortune 500 utility completes full post-quantum cryptography pilot program",
+      "buyer": "CISO / VP of Infrastructure Security, Utilities",
+      "cta": "What's your biggest concern about post-quantum migration planning?"
     },
     {
       "id": 8,
@@ -153,12 +153,12 @@
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "Mortgage Application UX: 5 Regulatory Friction Points That Drive Customer Abandonment",
-      "hook": "TRID requirements add 73 mandatory disclosure steps to mortgage applications — but banks treating compliance as pure friction are missing the customer experience opportunity.",
-      "brief": "5-slide breakdown of mortgage application friction points created by regulatory requirements: TRID timing, income verification, appraisal coordination, closing disclosure review, and escrow setup. Show how each can become experience differentiator rather than compliance burden.",
-      "stat": "Mortgage applications have 43% abandonment rate, with 67% of dropoffs occurring at regulatory disclosure stages that could be redesigned for clarity and engagement",
-      "buyer": "Head of Digital / CMO",
-      "cta": "Which mortgage friction point causes the most abandonment in your pipeline?"
+      "title": "Ready to transform your digital banking experience? Start with our DCX maturity assessment",
+      "hook": "Banks improving their DCX maturity score by just 2 points see 31% higher customer retention — where does your organization stand?",
+      "brief": "Sales-focused carousel presenting the DCX maturity assessment offer, showing the framework, sample insights from other banks, and the clear path from assessment to improvement strategy.",
+      "stat": "2-point DCX maturity improvement correlates with 31% higher customer retention",
+      "buyer": "Chief Digital Officer / Head of Customer Experience, BFSI",
+      "cta": "Ready to benchmark your DCX maturity against industry leaders?"
     },
     {
       "id": 9,
@@ -167,17 +167,17 @@
       "week": 2,
       "offering": "ai",
       "vertical": "healthcare",
-      "format": "single-image",
+      "format": "thought-leadership",
       "stripe": "s-ai",
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "PHI Data Sovereignty: Edge AI Deployment Under HIPAA's Minimum Necessary Standard",
-      "hook": "HIPAA's minimum necessary standard requires healthcare AI to process only essential data — but most edge AI systems are designed to consume everything available for maximum accuracy.",
-      "brief": "Examine the tension between AI performance optimization and HIPAA compliance in edge deployments. Focus on data minimization requirements, local processing benefits, and governance frameworks that satisfy both regulatory and clinical effectiveness needs.",
-      "stat": "Edge AI in healthcare can reduce PHI transmission by 85%, but only 19% of health systems have governance frameworks that properly scope minimum necessary data for AI processing",
-      "buyer": "CMIO / VP of IT",
-      "cta": "How does your edge AI governance handle HIPAA's minimum necessary requirement?"
+      "title": "Is your healthcare AI governance ready for the new FDA guidance? Let's assess together",
+      "hook": "The FDA's updated AI/ML guidance creates 12 new compliance checkpoints — healthcare leaders are booking governance assessments to stay ahead.",
+      "brief": "Sales post positioned as thought leadership, outlining the new FDA guidance implications and positioning Sumeru's AI governance assessment as the logical next step for compliance-conscious healthcare organizations.",
+      "stat": "FDA's updated AI/ML guidance introduces 12 new compliance checkpoints",
+      "buyer": "Chief Medical Officer / VP of Regulatory Affairs, Healthcare",
+      "cta": "Ready to ensure your AI governance meets the new FDA standards?"
     },
     {
       "id": 10,
@@ -191,12 +191,12 @@
       "special": "",
       "badge": "",
       "badgeText": "",
-      "title": "Enterprise Software Demo Bingo: 'This Will Revolutionize Your Industry'",
-      "hook": "Every enterprise software demo has the exact same script — and we've turned it into the world's most predictable bingo game.",
-      "brief": "Humorous video bingo card of enterprise software demo clichés: 'single pane of glass,' 'best-of-breed,' 'seamless integration,' 'paradigm shift,' 'revolutionary approach,' etc. Show how Sumeru's consultants help clients cut through the buzzwords to real capability assessment.",
-      "stat": "Average enterprise software demo contains 23 buzzwords and 4.7 'revolutionary' claims — but only 12% of claimed integrations work without custom development",
-      "buyer": "Cross-vertical",
-      "cta": "What's the most ridiculous software demo claim you've encountered this year?"
+      "title": "Friday quantum fact: How quantum entanglement could revolutionize your morning coffee",
+      "hook": "Quantum sensors are already improving coffee roasting precision by 40% — here's how entanglement makes your Friday brew possible.",
+      "brief": "Light-hearted Friday video connecting quantum physics concepts to everyday life through coffee roasting, making complex science accessible and engaging while subtly showcasing technical expertise.",
+      "stat": "Quantum sensors improve coffee roasting precision by 40%",
+      "buyer": "General audience / Technical community",
+      "cta": "What everyday technology would you quantum-enhance first?"
     }
   ],
   "postCopy": {}
