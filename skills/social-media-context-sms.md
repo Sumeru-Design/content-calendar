@@ -14,6 +14,7 @@
 
 ## Target Audience
 
+Our target audience is CXOs in North America and, more specifically, the USA.
 Three buyer personas — content is always written for ONE persona per post, never blended:
 
 **BFSI:** CISO / Chief Risk Officer / CMO / Head of Digital
@@ -65,4 +66,5 @@ Three buyer personas — content is always written for ONE persona per post, nev
 - Use "Sound familiar?" openers
 - Use "That's not an X problem, that's a Y problem" reframe construction
 - Use punchline-philosophy closers
+- Never build calendar/content based on EU regulations or any reference that is EU-specific. Content needs to be tailored to North America and, more specifically USA audiences.
 - Mix verticals in a single piece of content
