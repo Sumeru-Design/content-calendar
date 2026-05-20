@@ -2,7 +2,7 @@
 
 > Auto-updated by n8n on each Slack submission.
 > Status: `queued` | `in_progress` | `scheduled` | `done` | `skipped`
-> Total ideas logged: 4
+> Total ideas logged: 5
 
 ## IDEA-001 · queued
 - **Submitted:** 04/30/2026, 03:59 PM PT
@@ -100,6 +100,16 @@ Sumeru’s PQC service groups include post-quantum risk assessment and roadmap d
 The goal is not simply to replace encryption algorithms.
 It is to help organizations understand where cryptographic risk exists, prioritize what matters, modernize the trust layer, and build the agility required for a quantum-safe future.
 Because the quantum threat is not waiting for companies to be ready. It is already in motion.
+- **URL:** —
+- **Has image:** No
+- **Run ID:** —
+
+---
+
+## IDEA-005 · queued
+- **Submitted:** 05/20/2026, 10:06 AM PT
+- **By:** U06C7PWHLE5
+- **Idea:** We should create some posts on compliance requirements in financial services and healthcare (separately) in terms of customer communication (DCX). What the regulations are and what the practical requirement asre. And how Sumeru is using a combination of automation (Integrity AI, etc) and AI-enablement to make sure that the 30M+ emails we send out are compliaint to regulations as well as client's specific requirements.
 - **URL:** —
 - **Has image:** No
 - **Run ID:** —
